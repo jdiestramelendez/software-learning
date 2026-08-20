@@ -12,14 +12,12 @@ const SIZE = {
   lg: 'size-24 text-4xl',
 } as const
 
-/** Deterministic colour per name, so the same person is always the same hue. */
-const TONES = [
-  'bg-macaw',
-  'bg-feather-green',
-  'bg-beetle',
-  'bg-fox',
-  'bg-cardinal',
-]
+/**
+ * Deterministic colour per name, so the same person is always the same hue.
+ * Deep tones only: the initials sit on top in `paper`, and the error red is
+ * deliberately not in the rotation.
+ */
+const TONES = ['bg-iris', 'bg-plum', 'bg-tide', 'bg-clay', 'bg-fern']
 
 export function Avatar({ name, size = 'md', className }: AvatarProps) {
   const initials = name
@@ -35,7 +33,7 @@ export function Avatar({ name, size = 'md', className }: AvatarProps) {
     <span
       title={name}
       className={cn(
-        'grid shrink-0 place-items-center rounded-full text-snow',
+        'grid shrink-0 place-items-center rounded-full text-paper',
         SIZE[size],
         TONES[hash % TONES.length],
         className,

@@ -33,9 +33,9 @@ npm run dev          # http://localhost:5173
 
 ## The design system
 
-> Duolingo's own system ("Feathers") is internal and not published as a package,
-> so this is a from-scratch implementation of the same design language. That is
-> the point: you can read every line of it.
+> Built from scratch, so you can read every line of it. The visual identity is
+> its own: a purple brand on a warm cream page, with coral as the energetic
+> secondary — playful and friendly without borrowing anyone else's look.
 
 Everything lives in `src/design-system/`:
 
@@ -54,36 +54,59 @@ import { Button, Card, ProgressBar } from '@/design-system'
 Visit **`/design-system`** in the running app for the living style guide — if a
 component is not on that page, it does not exist.
 
-### The five rules
+### The palette
 
-1. **Tokens, never hex.** Components read `bg-feather-green`, not `#58cc02`. New
-   colour? Add it to `tokens.css` first. Tailwind v4 turns every `@theme` entry
-   into a utility automatically.
-2. **Colours are named after animals.** `eel`, `wolf`, `hare`, `swan`, `polar`
-   for neutrals; `feather-green`, `macaw`, `cardinal`, `bee`, `fox`, `beetle`
-   for meaning. It is much easier to argue about "eel vs wolf" than about two
-   greys.
-3. **Everything presses.** Interactive surfaces carry a hard `0 4px 0` shadow
-   with no blur — an extruded plastic face — and translate down 3px on
-   `:active`. That behaviour lives in one place, the `.ds-press` class in
-   `index.css`.
-4. **Bold, rounded, roomy.** Body weight is 700 and nothing is sharper than 8px.
-   Buttons are uppercase with wide tracking (`text-eyebrow`).
-5. **Colour is never the only signal.** A selected choice changes its border,
+| | Face | Deep | Wash | Used for |
+| --- | --- | --- | --- | --- |
+| **Brand** | `iris` #7a5af8 | `plum` | `lilac` | Primary action, selection, progress |
+| **Secondary** | `coral` #ff7a5c | `clay` | `blush` | Streaks, rewards, premium |
+| Success | `meadow` | `fern` | `dew` | Correct answers only |
+| Information | `sky` / `tide` | `harbor` | `mist` | Links, the second track |
+| Danger | `poppy` | `rust` | `petal` | Errors, hearts |
+| Reward | `sunbeam` | `honey` | `butter` | XP, gold |
+
+Neutrals are warm and very slightly purple, so they sit *with* the brand rather
+than against it: `ink` → `slate` → `pebble` → `linen` → `sand` → `cream` →
+`paper`. **`cream` is the page; `paper` is what sits on top of it.**
+
+### The six rules
+
+1. **Tokens, never hex.** Components read `bg-iris`, not `#7a5af8`. New colour?
+   Add it to `tokens.css` first — Tailwind v4 turns every `@theme` entry into a
+   utility automatically. This file *is* the visual identity: re-skinning the
+   product means editing it and very little else.
+2. **Every hue comes in three tones.** A FACE for surfaces, a DEEP for the
+   pressed edge and for text on the wash, and a WASH for tinted backgrounds.
+   Text on a wash always takes the deep tone, never the face.
+3. **Deep surfaces take `paper`; bright surfaces take `ink`.** That single rule
+   is what lets coral and sunbeam stay genuinely bright instead of being
+   muddied down until white text passes contrast.
+4. **Everything presses.** Interactive surfaces carry two shadow layers — a
+   short solid face for thickness and a wide, very soft ambient shadow that
+   lifts them off the cream — and travel down 3px on `:active`, collapsing
+   both. That behaviour lives in one place: `.ds-press` in `index.css`.
+5. **Two rounded voices.** Quicksand is geometric and carries headings and
+   buttons; Nunito has the taller x-height and carries body copy. Buttons are
+   uppercase with wide tracking (`text-eyebrow`), and nothing is sharper than
+   8px.
+6. **Colour is never the only signal.** A selected choice changes its border,
    its background, *and* its `aria-pressed`. Icon-only buttons take a required
-   `label`.
+   `label`. Every piece of visible enabled text clears WCAG AA — there is a
+   script in the repo history that walks the rendered pages to prove it.
 
 ### Components
 
 | Component        | Purpose                                                   |
 | ---------------- | --------------------------------------------------------- |
 | `Button`         | 6 variants × 3 sizes; the press is the whole personality   |
+| `LanguageSwitch` | Two-position toggle; state in `aria-pressed`, not colour   |
 | `IconButton`     | Square icon target; requires an accessible `label`         |
-| `Card`           | Default container — 2px swan border, hard bottom edge      |
+| `Card`           | Default container — 2px linen border, soft ambient lift    |
 | `ProgressBar`    | Lesson / goal progress, with the rounded-tube highlight    |
 | `Badge`          | Small status pill in six tones                             |
 | `ChoiceCard`     | Selectable answer: `idle` / `selected` / `correct` / `wrong` |
 | `FeedbackFooter` | The green/red sheet that explains a wrong answer           |
+| `ConceptCard`    | The teaching screen shown before a unit's questions        |
 | `SkillNode`      | A path bubble with an SVG progress ring                    |
 | `StatPill`       | The streak / gems / hearts counters                        |
 | `Avatar`         | Initials with a deterministic colour per name              |

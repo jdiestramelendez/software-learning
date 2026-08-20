@@ -6,6 +6,10 @@ import { cva } from 'class-variance-authority'
  *
  * Exported because non-button elements sometimes need to look like buttons —
  * a `<NavLink>` or an `<a download>`, for instance.
+ *
+ * On text colour: deep surfaces (iris, poppy, tide) carry white; the bright
+ * ones (coral) carry ink. That is what lets coral stay genuinely bright
+ * instead of being muddied down until white text passes contrast.
  */
 export const buttonVariants = cva(
   [
@@ -16,18 +20,15 @@ export const buttonVariants = cva(
   {
     variants: {
       variant: {
-        primary:
-          'bg-feather-green text-snow shadow-btn shadow-tree-frog hover:bg-feather-green/90',
-        danger:
-          'bg-cardinal text-snow shadow-btn shadow-fire-ant hover:bg-cardinal/90',
-        info: 'bg-macaw text-snow shadow-btn shadow-whale hover:bg-macaw/90',
-        super:
-          'bg-beetle text-snow shadow-btn shadow-humpback hover:bg-beetle/90',
+        primary: 'bg-iris text-paper shadow-btn shadow-plum hover:bg-plum',
+        danger: 'bg-poppy text-paper shadow-btn shadow-rust hover:bg-rust',
+        info: 'bg-tide text-paper shadow-btn shadow-harbor hover:bg-harbor',
+        super: 'bg-coral text-ink shadow-btn shadow-clay hover:bg-coral/85',
         /** Outlined, for the secondary action in a pair. */
         secondary:
-          'border-2 border-swan border-b-[4px] bg-snow text-macaw hover:bg-iguana active:border-b-2',
+          'border-2 border-linen border-b-[4px] bg-paper text-iris shadow-soft hover:border-iris/40 hover:bg-lilac active:border-b-2',
         /** No chrome at all — for "skip", "maybe later", nav items. */
-        ghost: 'bg-transparent text-wolf hover:bg-polar',
+        ghost: 'bg-transparent text-slate hover:bg-lilac hover:text-plum',
       },
       size: {
         sm: 'h-10 px-4 text-xs',
@@ -40,7 +41,7 @@ export const buttonVariants = cva(
       // Filled buttons lose all colour when disabled; outlined ones just fade.
       {
         variant: ['primary', 'danger', 'info', 'super'],
-        class: 'disabled:bg-swan disabled:text-hare disabled:shadow-none',
+        class: 'disabled:bg-sand disabled:text-pebble disabled:shadow-none',
       },
     ],
     defaultVariants: { variant: 'primary', size: 'md' },

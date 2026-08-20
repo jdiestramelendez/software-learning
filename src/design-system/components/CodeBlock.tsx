@@ -14,8 +14,8 @@ export function CodeBlock({ children, className, tone = 'default' }: CodeBlockPr
       className={cn(
         'overflow-x-auto rounded-chunky border-2 p-4 font-mono text-sm font-medium',
         tone === 'inverted'
-          ? 'border-eel/20 bg-eel text-polar'
-          : 'border-swan bg-polar text-eel',
+          ? 'border-ink/20 bg-ink text-sand'
+          : 'border-linen bg-sand text-ink',
         className,
       )}
     >

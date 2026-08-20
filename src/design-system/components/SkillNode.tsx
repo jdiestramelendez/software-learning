@@ -14,17 +14,18 @@ export interface SkillNodeProps {
 }
 
 const FACE: Record<SkillStatus, string> = {
-  locked: 'bg-swan text-hare shadow-btn shadow-hare/60',
-  active: 'bg-feather-green text-snow shadow-btn shadow-tree-frog',
-  complete: 'bg-bee text-snow shadow-btn shadow-camel',
-  legendary: 'bg-beetle text-snow shadow-btn shadow-humpback',
+  locked: 'bg-linen text-pebble shadow-btn shadow-pebble/50',
+  active: 'bg-iris text-paper shadow-btn shadow-plum',
+  // Bright faces keep their brightness and take ink instead of white.
+  complete: 'bg-sunbeam text-ink shadow-btn shadow-honey/70',
+  legendary: 'bg-coral text-ink shadow-btn shadow-clay',
 }
 
 const RING: Record<SkillStatus, string> = {
-  locked: 'stroke-swan',
-  active: 'stroke-feather-green',
-  complete: 'stroke-bee',
-  legendary: 'stroke-beetle',
+  locked: 'stroke-linen',
+  active: 'stroke-iris',
+  complete: 'stroke-sunbeam',
+  legendary: 'stroke-coral',
 }
 
 const R = 34
@@ -61,7 +62,7 @@ export function SkillNode({
               r={R}
               fill="none"
               strokeWidth="6"
-              className="stroke-swan"
+              className="stroke-linen"
             />
             <circle
               cx="38"
@@ -95,7 +96,7 @@ export function SkillNode({
       <span
         className={cn(
           'max-w-32 text-center text-xs uppercase tracking-wide',
-          locked ? 'text-hare' : 'text-wolf',
+          locked ? 'text-pebble' : 'text-slate',
         )}
       >
         {title}

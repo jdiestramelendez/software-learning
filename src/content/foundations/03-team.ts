@@ -384,8 +384,8 @@ git ___ a1b2c3d`,
             es: 'Construye una vez y despliega el mismo artefacto en todos los entornos. Reconstruir por entorno significa que nunca probaste lo que publicaste.',
           },
           {
-            en: 'Deploy strategies: blue-green (two environments, flip traffic), canary (a small % first), rolling (replace instances gradually).',
-            es: 'Estrategias de despliegue: blue-green (dos entornos, se cambia el tráfico), canary (primero un % pequeño), rolling (sustituir instancias poco a poco).',
+            en: 'Deploy strategies: blue-green (two environments, flip traffic), butter (a small % first), rolling (replace instances gradually).',
+            es: 'Estrategias de despliegue: blue-green (dos entornos, se cambia el tráfico), butter (primero un % pequeño), rolling (sustituir instancias poco a poco).',
           },
         ],
         example: {
@@ -444,8 +444,8 @@ jobs:
           kind: 'choice',
           id: 'ci-2',
           prompt: {
-            en: 'In a canary deployment, what happens?',
-            es: 'En un despliegue canary, ¿qué ocurre?',
+            en: 'In a butter deployment, what happens?',
+            es: 'En un despliegue butter, ¿qué ocurre?',
           },
           choices: [
             {

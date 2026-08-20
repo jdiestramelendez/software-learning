@@ -19,10 +19,10 @@ export function SectionHeader({
   return (
     <div
       className={cn(
-        'rounded-slab p-5 text-snow',
+        'rounded-slab p-5 text-paper',
         accent === 'green'
-          ? 'bg-feather-green shadow-[0_4px_0_0_var(--color-tree-frog)]'
-          : 'bg-macaw shadow-[0_4px_0_0_var(--color-whale)]',
+          ? 'bg-iris shadow-btn shadow-plum'
+          : 'bg-tide shadow-btn shadow-harbor',
         className,
       )}
     >

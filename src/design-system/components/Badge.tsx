@@ -7,12 +7,12 @@ const badge = cva(
   {
     variants: {
       tone: {
-        green: 'bg-sea-sponge text-tree-frog',
-        blue: 'bg-iguana text-whale',
-        red: 'bg-walking-fish text-fire-ant',
-        yellow: 'bg-canary text-camel',
-        purple: 'bg-beetle/15 text-humpback',
-        neutral: 'bg-polar text-wolf',
+        green: 'bg-dew text-fern',
+        blue: 'bg-mist text-harbor',
+        red: 'bg-petal text-rust',
+        yellow: 'bg-butter text-honey',
+        purple: 'bg-lilac text-plum',
+        neutral: 'bg-sand text-slate',
       },
     },
     defaultVariants: { tone: 'neutral' },

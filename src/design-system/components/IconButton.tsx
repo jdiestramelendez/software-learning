@@ -22,8 +22,8 @@ export function IconButton({
       aria-label={label}
       title={label}
       className={cn(
-        'ds-press grid size-11 place-items-center rounded-chunky text-2xl text-hare',
-        'hover:bg-polar hover:text-wolf',
+        'ds-press grid size-11 place-items-center rounded-chunky text-2xl text-pebble',
+        'hover:bg-lilac hover:text-plum',
         className,
       )}
       {...props}

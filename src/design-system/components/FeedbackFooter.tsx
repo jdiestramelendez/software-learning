@@ -30,16 +30,14 @@ export function FeedbackFooter({
       aria-live="polite"
       className={cn(
         'animate-rise border-t-2 px-4 py-5',
-        correct
-          ? 'border-sea-sponge bg-sea-sponge'
-          : 'border-walking-fish bg-walking-fish',
+        correct ? 'border-meadow/40 bg-dew' : 'border-poppy/30 bg-petal',
       )}
     >
       <div className="mx-auto flex max-w-2xl flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div
           className={cn(
             'flex items-start gap-3',
-            correct ? 'text-tree-frog' : 'text-fire-ant',
+            correct ? 'text-fern' : 'text-rust',
           )}
         >
           <span aria-hidden className="text-3xl leading-none">

@@ -13,9 +13,9 @@ export function TracksPage() {
   return (
     <div className="mx-auto max-w-3xl space-y-8">
       <header>
-        <p className="text-eyebrow uppercase text-wolf">Bitwise</p>
-        <h1 className="mt-1 text-hero text-feather-green">{ui('tracks.title')}</h1>
-        <p className="mt-3 font-semibold text-wolf">
+        <p className="text-eyebrow uppercase text-slate">Bitwise</p>
+        <h1 className="mt-1 text-hero text-iris">{ui('tracks.title')}</h1>
+        <p className="mt-3 font-semibold text-slate">
           {ui('tracks.intro', { units: totalUnits, questions: totalQuestions })}
         </p>
       </header>
@@ -32,7 +32,7 @@ export function TracksPage() {
               key={track.id}
               className={cn(
                 'flex flex-col',
-                green ? 'border-feather-green/40' : 'border-macaw/40',
+                green ? 'border-iris/35' : 'border-tide/35',
               )}
             >
               <div className="flex items-start gap-3">
@@ -41,19 +41,19 @@ export function TracksPage() {
                 </span>
                 <div className="min-w-0">
                   <h2 className="text-xl leading-tight">{text(track.title)}</h2>
-                  <p className="mt-1 text-sm text-wolf">{text(track.subtitle)}</p>
+                  <p className="mt-1 text-sm text-slate">{text(track.subtitle)}</p>
                 </div>
               </div>
 
               <div className="mt-4 flex flex-wrap gap-2">
-                <Badge tone={green ? 'green' : 'blue'}>
+                <Badge tone={green ? 'purple' : 'blue'}>
                   {ui('tracks.sections', { n: track.sections.length })}
                 </Badge>
                 <Badge>{ui('tracks.units', { n: unitsOf(track).length })}</Badge>
               </div>
 
               <div className="mt-4">
-                <div className="mb-2 flex items-baseline justify-between text-xs text-wolf">
+                <div className="mb-2 flex items-baseline justify-between text-xs text-slate">
                   <span>{ui('tracks.progress')}</span>
                   <span>
                     {done} / {total}
@@ -76,7 +76,7 @@ export function TracksPage() {
                 </Button>
               </Link>
               {next && (
-                <p className="mt-2 truncate text-center text-xs text-wolf">
+                <p className="mt-2 truncate text-center text-xs text-slate">
                   {ui('tracks.next')}: {next.icon} {text(next.title)}
                 </p>
               )}
@@ -86,9 +86,9 @@ export function TracksPage() {
       </div>
 
       {xp > 0 && (
-        <Card flat className="bg-canary text-center">
-          <p className="text-eyebrow uppercase text-camel">{ui('tracks.earned')}</p>
-          <p className="text-title text-camel">{xp} XP</p>
+        <Card flat className="bg-butter text-center">
+          <p className="text-eyebrow uppercase text-honey">{ui('tracks.earned')}</p>
+          <p className="text-title text-honey">{xp} XP</p>
         </Card>
       )}
     </div>

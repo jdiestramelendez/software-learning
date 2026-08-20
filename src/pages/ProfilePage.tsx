@@ -43,7 +43,7 @@ export function ProfilePage() {
         <Avatar name={LEARNER_NAME} size="lg" />
         <div>
           <h1 className="text-title">{LEARNER_NAME}</h1>
-          <p className="text-sm text-wolf">{ui('profile.tagline')}</p>
+          <p className="text-sm text-slate">{ui('profile.tagline')}</p>
           <div className="mt-3 flex flex-wrap justify-center gap-2 sm:justify-start">
             <Badge tone="yellow">🔥 {streak} day streak</Badge>
             <Badge tone="green">⚡ {xp} XP</Badge>
@@ -52,7 +52,7 @@ export function ProfilePage() {
       </Card>
 
       <section>
-        <h2 className="mb-3 text-eyebrow uppercase text-wolf">{ui('profile.statistics')}</h2>
+        <h2 className="mb-3 text-eyebrow uppercase text-slate">{ui('profile.statistics')}</h2>
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
           {[
             { icon: '🔥', value: streak, label: ui('stat.streak') },
@@ -70,7 +70,7 @@ export function ProfilePage() {
               </span>
               <div className="min-w-0">
                 <p className="text-lg leading-tight">{stat.value}</p>
-                <p className="truncate text-xs text-wolf">{stat.label}</p>
+                <p className="truncate text-xs text-slate">{stat.label}</p>
               </div>
             </Card>
           ))}
@@ -78,7 +78,7 @@ export function ProfilePage() {
       </section>
 
       <section>
-        <h2 className="mb-3 text-eyebrow uppercase text-wolf">{ui('profile.tracks')}</h2>
+        <h2 className="mb-3 text-eyebrow uppercase text-slate">{ui('profile.tracks')}</h2>
         <div className="space-y-3">
           {tracks.map((track) => {
             const { done, total, ratio } = trackCompletion(track, completed)
@@ -90,7 +90,7 @@ export function ProfilePage() {
                 <div className="min-w-0 flex-1">
                   <div className="flex items-baseline justify-between gap-2">
                     <p className="truncate">{text(track.title)}</p>
-                    <span className="shrink-0 text-xs text-wolf">
+                    <span className="shrink-0 text-xs text-slate">
                       {done} / {total}
                     </span>
                   </div>
@@ -108,7 +108,7 @@ export function ProfilePage() {
       </section>
 
       <section>
-        <h2 className="mb-3 text-eyebrow uppercase text-wolf">{ui('profile.achievements')}</h2>
+        <h2 className="mb-3 text-eyebrow uppercase text-slate">{ui('profile.achievements')}</h2>
         <div className="space-y-3">
           {achievements.map((a) => (
             <Card key={a.title} className="flex items-center gap-4">
@@ -121,11 +121,11 @@ export function ProfilePage() {
               <div className="min-w-0 flex-1">
                 <div className="flex items-baseline justify-between gap-2">
                   <p className="truncate">{a.title}</p>
-                  <span className="shrink-0 text-xs text-wolf">
+                  <span className="shrink-0 text-xs text-slate">
                     {Math.round(a.progress * 100)}%
                   </span>
                 </div>
-                <p className="truncate text-sm text-wolf">{a.detail}</p>
+                <p className="truncate text-sm text-slate">{a.detail}</p>
                 <ProgressBar
                   className="mt-2 h-3"
                   color={a.progress >= 1 ? 'green' : 'yellow'}
@@ -138,9 +138,9 @@ export function ProfilePage() {
         </div>
       </section>
 
-      <Card flat className="bg-polar">
-        <h2 className="text-eyebrow uppercase text-wolf">{ui('profile.dataTitle')}</h2>
-        <p className="mt-2 text-sm text-wolf">{ui('profile.dataNote')}</p>
+      <Card flat className="bg-sand">
+        <h2 className="text-eyebrow uppercase text-slate">{ui('profile.dataTitle')}</h2>
+        <p className="mt-2 text-sm text-slate">{ui('profile.dataNote')}</p>
         <Button
           variant="secondary"
           size="sm"

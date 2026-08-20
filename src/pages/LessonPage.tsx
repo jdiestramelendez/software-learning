@@ -84,7 +84,7 @@ export function LessonPage() {
     return (
       <div className="mx-auto max-w-md px-4 py-16 text-center">
         <p className="text-title">{ui('lesson.notFound')}</p>
-        <Link to="/" className="mt-4 inline-block text-macaw underline">
+        <Link to="/" className="mt-4 inline-block text-tide underline">
           {ui('lesson.backToTracks')}
         </Link>
       </div>
@@ -103,7 +103,7 @@ export function LessonPage() {
           >
             ✕
           </IconButton>
-          <p className="text-eyebrow uppercase text-wolf">{text(track.title)}</p>
+          <p className="text-eyebrow uppercase text-slate">{text(track.title)}</p>
         </div>
 
         <div className="mx-auto w-full max-w-2xl flex-1 px-4">
@@ -123,7 +123,7 @@ export function LessonPage() {
           />
         </div>
 
-        <div className="mt-10 border-t-2 border-swan px-4 py-5">
+        <div className="mt-10 border-t-2 border-linen px-4 py-5">
           <div className="mx-auto flex max-w-2xl justify-end">
             <Button size="lg" onClick={begin} className="w-full sm:w-auto sm:min-w-56">
               {ui('lesson.start', { n: questions.length })}
@@ -141,17 +141,17 @@ export function LessonPage() {
         <span aria-hidden className="text-7xl">
           {perfect ? '🏆' : '✅'}
         </span>
-        <h1 className="text-hero text-feather-green">
+        <h1 className="text-hero text-fern">
           {perfect ? ui('lesson.perfect') : ui('lesson.complete')}
         </h1>
-        <p className="text-wolf">{text(unit.title)}</p>
+        <p className="text-slate">{text(unit.title)}</p>
 
         <div className="flex w-full gap-3">
-          <Card className="flex-1 border-bee bg-canary text-camel">
+          <Card className="flex-1 border-sunbeam/60 bg-butter text-honey">
             <p className="text-eyebrow uppercase">{ui('lesson.xpEarned')}</p>
             <p className="text-title">{lesson.correctCount * XP_PER_CORRECT}</p>
           </Card>
-          <Card className="flex-1 border-macaw bg-iguana text-whale">
+          <Card className="flex-1 border-iris/40 bg-lilac text-plum">
             <p className="text-eyebrow uppercase">{ui('lesson.accuracy')}</p>
             <p className="text-title">
               {Math.round((lesson.correctCount / lesson.total) * 100)}%
@@ -188,7 +188,7 @@ export function LessonPage() {
           color={track.accent === 'green' ? 'green' : 'blue'}
           label={ui('lesson.progress')}
         />
-        <span className="flex items-center gap-1 text-lg text-cardinal">
+        <span className="flex items-center gap-1 text-lg text-poppy">
           <span aria-hidden>❤️</span>
           {lesson.hearts}
           <span className="sr-only">{ui('stat.hearts')}</span>
@@ -234,7 +234,7 @@ export function LessonPage() {
 
           {question.kind === 'boolean' && (
             <>
-              <Card flat className="border-2 border-swan bg-polar text-center">
+              <Card flat className="border-2 border-linen bg-sand text-center">
                 <p className="text-lg leading-snug">{text(question.statement)}</p>
               </Card>
               <div className="mt-4 grid gap-3 sm:grid-cols-2">
@@ -293,7 +293,7 @@ export function LessonPage() {
           />
         </div>
       ) : (
-        <div className="mt-10 border-t-2 border-swan px-4 py-5">
+        <div className="mt-10 border-t-2 border-linen px-4 py-5">
           <div className="mx-auto flex max-w-2xl justify-end">
             <Button
               size="lg"

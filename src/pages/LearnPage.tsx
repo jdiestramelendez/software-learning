@@ -32,7 +32,7 @@ export function LearnPage() {
     <div className="flex flex-col gap-8 lg:flex-row">
       <div className="min-w-0 flex-1 space-y-10">
         <div>
-          <Link to="/" className="text-sm text-macaw underline">
+          <Link to="/" className="text-sm text-tide underline">
             ← {ui('learn.allTracks')}
           </Link>
           <h1 className="mt-2 text-title">
@@ -41,7 +41,7 @@ export function LearnPage() {
             </span>
             {text(track.title)}
           </h1>
-          <p className="mt-1 text-sm text-wolf">{text(track.subtitle)}</p>
+          <p className="mt-1 text-sm text-slate">{text(track.subtitle)}</p>
         </div>
 
         {track.sections.map((section, sectionIndex) => (
@@ -81,8 +81,8 @@ export function LearnPage() {
       <aside className="w-full shrink-0 space-y-4 lg:sticky lg:top-6 lg:w-72 lg:self-start">
         <Card>
           <div className="flex items-center justify-between">
-            <h2 className="text-eyebrow uppercase text-wolf">{ui('learn.trackProgress')}</h2>
-            <Badge tone={track.accent === 'green' ? 'green' : 'blue'}>
+            <h2 className="text-eyebrow uppercase text-slate">{ui('learn.trackProgress')}</h2>
+            <Badge tone={track.accent === 'green' ? 'purple' : 'blue'}>
               {done} / {total}
             </Badge>
           </div>
@@ -92,7 +92,7 @@ export function LearnPage() {
             value={ratio * 100}
             label={text(track.title)}
           />
-          <p className="mt-3 text-sm text-wolf">
+          <p className="mt-3 text-sm text-slate">
             {total - done === 0
               ? ui('learn.done')
               : ui('learn.remaining', { n: total - done })}
@@ -100,15 +100,15 @@ export function LearnPage() {
         </Card>
 
         <Card>
-          <h2 className="text-eyebrow uppercase text-wolf">{ui('learn.you')}</h2>
+          <h2 className="text-eyebrow uppercase text-slate">{ui('learn.you')}</h2>
           <div className="mt-3 flex items-center justify-between">
             <StatPill icon="🔥" value={streak} label={ui('stat.streak')} tone="fox" />
             <StatPill icon="⚡" value={xp} label={ui('stat.xp')} tone="bee" />
           </div>
         </Card>
 
-        <Card flat className="bg-polar">
-          <p className="text-sm text-wolf">{ui('learn.unlockNote')}</p>
+        <Card flat className="bg-lilac">
+          <p className="text-sm text-slate">{ui('learn.unlockNote')}</p>
         </Card>
       </aside>
     </div>

@@ -10,10 +10,15 @@ export interface ProgressBarProps {
   label?: string
 }
 
+/**
+ * Fills carry no text of their own, so they can stay at full brightness.
+ * Progress reads as the brand; `meadow` stays reserved for correctness, so the
+ * two never get confused with each other.
+ */
 const FILL = {
-  green: 'bg-feather-green',
-  yellow: 'bg-bee',
-  blue: 'bg-macaw',
+  green: 'bg-iris',
+  yellow: 'bg-sunbeam',
+  blue: 'bg-sky',
 } as const
 
 /**
@@ -37,7 +42,7 @@ export function ProgressBar({
       aria-valuenow={Math.round(pct)}
       aria-valuemin={0}
       aria-valuemax={100}
-      className={cn('h-4 w-full overflow-hidden rounded-full bg-swan', className)}
+      className={cn('h-4 w-full overflow-hidden rounded-full bg-linen', className)}
     >
       <div
         className={cn(
@@ -47,7 +52,7 @@ export function ProgressBar({
         style={{ width: `${pct}%` }}
       >
         {pct > 8 && (
-          <span className="absolute inset-x-2 top-1 h-1 rounded-full bg-snow/30" />
+          <span className="absolute inset-x-2 top-1 h-1 rounded-full bg-paper/30" />
         )}
       </div>
     </div>

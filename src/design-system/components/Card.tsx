@@ -6,13 +6,13 @@ export interface CardProps extends HTMLAttributes<HTMLDivElement> {
   flat?: boolean
 }
 
-/** The default container: 2px swan border, slab radius, hard bottom edge. */
+/** The default container: 2px linen border, slab radius, hard bottom edge. */
 export function Card({ className, flat, ...props }: CardProps) {
   return (
     <div
       className={cn(
-        'rounded-slab bg-snow p-5',
-        !flat && 'border-2 border-swan shadow-card',
+        'rounded-slab bg-paper p-5',
+        !flat && 'border-2 border-linen shadow-card',
         className,
       )}
       {...props}

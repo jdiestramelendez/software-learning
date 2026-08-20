@@ -9,11 +9,16 @@ export interface StatPillProps {
   className?: string
 }
 
+/**
+ * The `tone` values are part of the public API and predate this palette, so
+ * they stay put — only what they render as has changed. Each still names the
+ * same hue family it always did.
+ */
 const TONE = {
-  fox: 'text-fox',
-  macaw: 'text-macaw',
-  cardinal: 'text-cardinal',
-  bee: 'text-bee',
+  fox: 'text-clay',
+  macaw: 'text-tide',
+  cardinal: 'text-poppy',
+  bee: 'text-honey',
 } as const
 
 /** The streak / gems / hearts counters that live in the top bar. */

@@ -9,9 +9,9 @@ export interface GapCodeProps {
 }
 
 const FILL = {
-  idle: 'border-macaw bg-iguana text-whale',
-  correct: 'border-feather-green bg-sea-sponge text-tree-frog',
-  wrong: 'border-cardinal bg-walking-fish text-fire-ant',
+  idle: 'border-iris bg-lilac text-plum',
+  correct: 'border-meadow bg-dew text-fern',
+  wrong: 'border-poppy bg-petal text-rust',
 } as const
 
 /** A code sample with the blank rendered as a slot that fills in as you answer. */
@@ -20,13 +20,13 @@ export function GapCode({ code, filled, state = 'idle' }: GapCodeProps) {
   const after = rest.join('___')
 
   return (
-    <pre className="overflow-x-auto rounded-chunky border-2 border-swan bg-polar p-4 font-mono text-sm font-medium text-eel">
+    <pre className="overflow-x-auto rounded-chunky border-2 border-linen bg-sand p-4 font-mono text-sm font-medium text-ink">
       <code>
         {before}
         <span
           className={cn(
             'mx-0.5 inline-block min-w-24 rounded-md border-2 px-2 py-0.5 text-center align-middle',
-            filled ? FILL[state] : 'border-dashed border-hare bg-snow text-hare',
+            filled ? FILL[state] : 'border-dashed border-pebble bg-paper text-pebble',
           )}
         >
           {filled ?? '?'}

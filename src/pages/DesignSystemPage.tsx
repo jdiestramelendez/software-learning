@@ -19,17 +19,22 @@ import {
 } from '@/design-system'
 
 const SWATCHES = [
-  { name: 'feather-green', hex: '#58cc02', use: 'Primary action, correct' },
-  { name: 'tree-frog', hex: '#58a700', use: 'Pressed face of green' },
-  { name: 'macaw', hex: '#1cb0f6', use: 'Links, selected state' },
-  { name: 'cardinal', hex: '#ff4b4b', use: 'Errors, hearts' },
-  { name: 'bee', hex: '#ffc800', use: 'XP, streaks' },
-  { name: 'fox', hex: '#ff9600', use: 'Streak flame' },
-  { name: 'beetle', hex: '#ce82ff', use: 'Premium' },
-  { name: 'eel', hex: '#4b4b4b', use: 'Body text' },
-  { name: 'wolf', hex: '#777777', use: 'Secondary text' },
-  { name: 'swan', hex: '#e5e5e5', use: 'Borders' },
-  { name: 'polar', hex: '#f7f7f7', use: 'Background' },
+  { name: 'iris', hex: '#7a5af8', use: 'Brand, primary action, selection' },
+  { name: 'plum', hex: '#5b3bd4', use: 'Pressed iris; iris text on a wash' },
+  { name: 'lilac', hex: '#f0ecff', use: 'Purple wash' },
+  { name: 'coral', hex: '#ff7a5c', use: 'Secondary: streaks, rewards' },
+  { name: 'clay', hex: '#c2451f', use: 'Pressed coral' },
+  { name: 'meadow', hex: '#3ed598', use: 'Correct, progress' },
+  { name: 'tide', hex: '#1877c0', use: 'Links, information' },
+  { name: 'poppy', hex: '#d33544', use: 'Errors, hearts' },
+  { name: 'sunbeam', hex: '#ffc53d', use: 'XP, gold' },
+  { name: 'ink', hex: '#2e2640', use: 'Body text' },
+  { name: 'slate', hex: '#655e79', use: 'Secondary text' },
+  { name: 'pebble', hex: '#8c85a3', use: 'Disabled, hints' },
+  { name: 'linen', hex: '#e8e2f2', use: 'Borders' },
+  { name: 'sand', hex: '#f5efe6', use: 'Subtle surface' },
+  { name: 'cream', hex: '#fdf8f1', use: 'The page itself' },
+  { name: 'paper', hex: '#ffffff', use: 'Cards and raised surfaces' },
 ]
 
 function Section({
@@ -45,7 +50,7 @@ function Section({
     <section className="space-y-4">
       <div>
         <h2 className="text-title">{title}</h2>
-        <p className="text-sm text-wolf">{note}</p>
+        <p className="text-sm text-slate">{note}</p>
       </div>
       <Card className="space-y-5">{children}</Card>
     </section>
@@ -65,34 +70,41 @@ export function DesignSystemPage() {
   return (
     <div className="mx-auto max-w-3xl space-y-10 pb-10">
       <header>
-        <p className="text-eyebrow uppercase text-wolf">Bitwise design system</p>
-        <h1 className="mt-1 text-hero text-feather-green">The look</h1>
-        <p className="mt-3 text-wolf">
-          Bold rounded type, hard 4px bottom shadows that press down, 2px swan
-          borders, and colour that always carries meaning. Every token lives in{' '}
-          <code className="rounded bg-polar px-1.5 py-0.5 font-mono text-sm">
+        <p className="text-eyebrow uppercase text-slate">Bitwise design system</p>
+        <h1 className="mt-1 text-hero text-iris">The look</h1>
+        <p className="mt-3 text-slate">
+          A purple brand on a warm cream page, with coral as the energetic
+          secondary. Rounded geometric type, soft dimensional shadows, and colour
+          that always carries meaning. Every token lives in{' '}
+          <code className="rounded bg-sand px-1.5 py-0.5 font-mono text-sm">
             src/design-system/tokens.css
           </code>
           .
         </p>
       </header>
 
-      <Section title="Colour" note="Named after animals, the way Duolingo does it.">
+      <Section
+        title="Colour"
+        note="Named after light and garden — what they look like, not what they are for."
+      >
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
           {SWATCHES.map((s) => (
-            <div key={s.name} className="overflow-hidden rounded-chunky border-2 border-swan">
+            <div key={s.name} className="overflow-hidden rounded-chunky border-2 border-linen">
               <div className="h-14" style={{ backgroundColor: s.hex }} />
               <div className="p-3">
                 <p className="text-sm">{s.name}</p>
-                <p className="font-mono text-xs font-medium text-wolf">{s.hex}</p>
-                <p className="mt-1 text-xs text-wolf">{s.use}</p>
+                <p className="font-mono text-xs font-medium text-slate">{s.hex}</p>
+                <p className="mt-1 text-xs text-slate">{s.use}</p>
               </div>
             </div>
           ))}
         </div>
       </Section>
 
-      <Section title="Buttons" note="Press one. The 4px shadow collapses as it moves down.">
+      <Section
+        title="Buttons"
+        note="Press one. The surface travels down and its thickness collapses."
+      >
         <div className="flex flex-wrap gap-3">
           <Button>Primary</Button>
           <Button variant="secondary">Secondary</Button>
@@ -115,9 +127,9 @@ export function DesignSystemPage() {
             label="Language"
             names={{ en: 'English', es: 'Español' }}
           />
-          <p className="text-sm text-wolf">
+          <p className="text-sm text-slate">
             Two-position toggle. Both options stay visible, and the pressed one carries
-            <code className="mx-1 rounded bg-polar px-1 font-mono text-xs">aria-pressed</code>
+            <code className="mx-1 rounded bg-sand px-1 font-mono text-xs">aria-pressed</code>
             rather than relying on colour alone.
           </p>
         </div>
@@ -189,7 +201,7 @@ export function DesignSystemPage() {
 
       <Section title="Question types" note="Four ways to ask, so 200 questions do not feel like one form.">
         <div>
-          <p className="mb-2 text-eyebrow uppercase text-wolf">Fill the gap</p>
+          <p className="mb-2 text-eyebrow uppercase text-slate">Fill the gap</p>
           <GapCode
             code={'const lookup = new ___(ids)\nlookup.has(99999)'}
             filled={gap === null ? null : ['Set', 'Array'][gap]}
@@ -210,7 +222,7 @@ export function DesignSystemPage() {
         </div>
 
         <div>
-          <p className="mb-2 text-eyebrow uppercase text-wolf">Put in order</p>
+          <p className="mb-2 text-eyebrow uppercase text-slate">Put in order</p>
           <OrderList
             ordered={ordered.map((index) => ({ index, label: STEPS[index] }))}
             pool={STEPS.map((label, index) => ({ index, label })).filter(
@@ -223,7 +235,7 @@ export function DesignSystemPage() {
         </div>
 
         <div>
-          <p className="mb-2 text-eyebrow uppercase text-wolf">Code block</p>
+          <p className="mb-2 text-eyebrow uppercase text-slate">Code block</p>
           <CodeBlock>{'git bisect start\ngit bisect bad\ngit bisect good v1.4.0'}</CodeBlock>
         </div>
       </Section>

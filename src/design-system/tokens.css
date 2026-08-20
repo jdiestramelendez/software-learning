@@ -1,55 +1,79 @@
 /* ---------------------------------------------------------------------------
  * Bitwise Design System — tokens
  *
- * A Duolingo-inspired design language. Everything below is a Tailwind v4
+ * One playful, friendly visual identity: a purple brand on a warm cream page,
+ * with coral as the energetic secondary. Everything below is a Tailwind v4
  * `@theme` token, so each entry automatically becomes a utility class:
- *   --color-feather-green  ->  bg-feather-green / text-feather-green / ...
- *   --radius-chunky        ->  rounded-chunky
- *   --shadow-btn           ->  shadow-btn
+ *   --color-iris      ->  bg-iris / text-iris / border-iris / ...
+ *   --radius-chunky   ->  rounded-chunky
+ *   --shadow-btn      ->  shadow-btn
  *
  * Rule of thumb: components never hardcode a hex value. If a colour is
- * missing here, add it here first.
+ * missing here, add it here first — this file IS the visual identity, and
+ * re-skinning the product should mean editing this file and little else.
  * ------------------------------------------------------------------------- */
 
 @theme {
-  /* -- Brand palette ------------------------------------------------------
-   * Duolingo names its colours after animals. We keep the convention because
-   * "eel" is far easier to talk about in a design review than "#4b4b4b".
+  /* -- Brand: purple ------------------------------------------------------
+   * Colours are named after light and garden: what they look like, not what
+   * they are for. `iris` is the product. Every hue below comes in three
+   * tones — a FACE for surfaces, a DEEP for the pressed edge and for text on
+   * the wash, and a WASH for tinted backgrounds.
    */
-  --color-feather-green: #58cc02; /* primary action, correct answers */
-  --color-mask-green: #89e219; /* the lighter top-face of a green button */
-  --color-tree-frog: #58a700; /* the pressed / bottom face of a green button */
-  --color-sea-sponge: #d7ffb8; /* correct-answer wash */
+  --color-iris: #7a5af8; /* primary action, brand, selection */
+  --color-plum: #5b3bd4; /* pressed face of iris; iris text on a wash */
+  --color-lilac: #f0ecff; /* purple wash */
 
-  --color-macaw: #1cb0f6; /* links, info, selected state */
-  --color-whale: #1899d6; /* pressed macaw */
-  --color-iguana: #ddf4ff; /* selected-option wash */
+  /* -- Secondary: coral ---------------------------------------------------
+   * The energy colour: streaks, premium, anything that should feel like a
+   * reward. Bright enough that it takes INK text, not white.
+   */
+  --color-coral: #ff7a5c;
+  --color-clay: #c2451f;
+  --color-blush: #ffede6;
 
-  --color-cardinal: #ff4b4b; /* errors, wrong answers, hearts */
-  --color-fire-ant: #ea2b2b; /* pressed cardinal */
-  --color-walking-fish: #ffdfe0; /* wrong-answer wash */
+  /* -- Success ------------------------------------------------------------- */
+  --color-meadow: #3ed598; /* correct answers, progress */
+  --color-fern: #0a7a50;
+  --color-dew: #dcf7ea;
 
-  --color-bee: #ffc800; /* streaks, XP, legendary */
-  --color-camel: #e2a600; /* pressed bee */
-  --color-canary: #fff4d9; /* xp wash */
+  /* -- Information --------------------------------------------------------- */
+  --color-sky: #4fb4f5; /* bright blue for fills with no text over them */
+  --color-tide: #1770b6; /* links, filled blue with white text, blue on a wash */
+  --color-harbor: #12639f;
+  --color-mist: #e3f2fe;
 
-  --color-fox: #ff9600; /* streak flame */
-  --color-beetle: #ce82ff; /* super / premium */
-  --color-humpback: #a560e8; /* pressed beetle */
+  /* -- Danger -------------------------------------------------------------- */
+  --color-poppy: #d33544; /* errors, wrong answers, hearts */
+  --color-rust: #b72a38;
+  --color-petal: #ffe7e6;
 
-  /* -- Neutrals ----------------------------------------------------------- */
-  --color-eel: #4b4b4b; /* body text */
-  --color-wolf: #777777; /* secondary text */
-  --color-hare: #afafaf; /* disabled text, icons */
-  --color-swan: #e5e5e5; /* borders */
-  --color-polar: #f7f7f7; /* app background, pressed neutral */
-  --color-snow: #ffffff;
+  /* -- Reward / XP --------------------------------------------------------- */
+  --color-sunbeam: #ffc53d;
+  --color-honey: #8a5f06;
+  --color-butter: #fff4d8;
+
+  /* -- Neutrals -----------------------------------------------------------
+   * Warm and very slightly purple, so they sit with the brand rather than
+   * against it. `cream` is the page; `paper` is what sits on top of it.
+   */
+  --color-ink: #2e2640; /* body text */
+  --color-slate: #655e79; /* secondary text */
+  --color-pebble: #6f6784; /* disabled text, hints, locked labels */
+  --color-linen: #e8e2f2; /* borders */
+  --color-sand: #f5efe6; /* subtle surface, pressed neutral */
+  --color-cream: #fdf8f1; /* the page itself */
+  --color-paper: #ffffff; /* cards and raised surfaces */
 
   /* -- Type ---------------------------------------------------------------
-   * Duolingo ships "din-round"/"Feather". Nunito is the closest thing that is
-   * freely licensed: same generous x-height and rounded terminals.
+   * Quicksand is geometric and round — it carries the display voice.
+   * Nunito has a taller x-height and reads better at paragraph length, so it
+   * keeps the body. Both are rounded, so the two never feel like a clash.
    */
   --font-display:
+    'Quicksand Variable', 'Quicksand', ui-rounded, 'Segoe UI Rounded', system-ui,
+    sans-serif;
+  --font-body:
     'Nunito Variable', 'Nunito', ui-rounded, 'Segoe UI Rounded', system-ui,
     sans-serif;
   --font-mono:
@@ -57,14 +81,14 @@
 
   --text-hero: 2.5rem;
   --text-hero--line-height: 1.15;
-  --text-hero--font-weight: 800;
+  --text-hero--font-weight: 700;
   --text-title: 1.75rem;
   --text-title--line-height: 1.2;
-  --text-title--font-weight: 800;
+  --text-title--font-weight: 700;
   --text-eyebrow: 0.8125rem;
   --text-eyebrow--line-height: 1.2;
   --text-eyebrow--letter-spacing: 0.08em;
-  --text-eyebrow--font-weight: 800;
+  --text-eyebrow--font-weight: 700;
 
   /* -- Shape --------------------------------------------------------------
    * Nothing in this system is sharper than 8px. Interactive surfaces are
@@ -74,13 +98,22 @@
   --radius-slab: 1.25rem;
 
   /* -- Elevation ----------------------------------------------------------
-   * The signature move: buttons have no blur, just a hard offset that reads
-   * as an extruded 3D face. Pressing removes it (see `.ds-press`).
+   * Two layers, always. A short solid face gives the surface its thickness,
+   * and a wide, very soft ambient shadow lifts it off the cream. The face is
+   * deliberately low-contrast — this should read as soft and dimensional,
+   * never as a hard drop shadow.
+   *
+   * `--tw-shadow-color` is what `shadow-plum`, `shadow-clay` and friends set,
+   * so the solid face picks up the pressed tone of whatever it sits on. The
+   * ambient layer stays neutral ink at all times.
    */
-  --shadow-btn: 0 4px 0 0 var(--tw-shadow-color, #00000022);
-  --shadow-btn-sm: 0 2px 0 0 var(--tw-shadow-color, #00000022);
-  --shadow-card: 0 2px 0 0 var(--color-swan);
-  --shadow-pop: 0 8px 24px -6px #4b4b4b33;
+  --shadow-btn:
+    0 4px 0 0 var(--tw-shadow-color, #2e26401f), 0 10px 20px -10px #2e264059;
+  --shadow-btn-sm:
+    0 2px 0 0 var(--tw-shadow-color, #2e26401a), 0 5px 12px -6px #2e264047;
+  --shadow-card: 0 1px 0 0 var(--color-linen), 0 10px 24px -16px #2e264052;
+  --shadow-soft: 0 6px 18px -10px #2e26403d;
+  --shadow-pop: 0 18px 44px -16px #2e264052;
 
   /* -- Motion -------------------------------------------------------------
    * Fast and springy. Anything slower than 200ms feels sluggish at this size.

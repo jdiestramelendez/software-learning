@@ -1,13 +1,15 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
-  <rect x="2" y="2" width="60" height="54" rx="16" fill="#58cc02" />
-  <rect x="2" y="8" width="60" height="54" rx="16" fill="#58a700" />
-  <rect x="2" y="2" width="60" height="54" rx="16" fill="#58cc02" />
+  <rect width="64" height="64" rx="18" fill="#fdf8f1" />
+  <!-- Geometric and friendly: a rounded square, a circle and an arc, from the
+       same two brand shapes the product uses everywhere. -->
+  <rect x="10" y="10" width="26" height="26" rx="9" fill="#7a5af8" />
+  <circle cx="44" cy="23" r="10" fill="#ff7a5c" />
   <path
-    d="M24 22 14 32l10 10M40 22l10 10-10 10"
+    d="M14 44a14 14 0 0 0 28 0"
     fill="none"
-    stroke="#ffffff"
-    stroke-width="6"
+    stroke="#3ed598"
+    stroke-width="7"
     stroke-linecap="round"
-    stroke-linejoin="round"
   />
+  <circle cx="48" cy="47" r="6" fill="#ffc53d" />
 </svg>

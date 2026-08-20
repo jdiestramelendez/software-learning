@@ -49,14 +49,14 @@ export function OrderList({
                 onClick={() => onUnpick(item.index)}
                 className={cn(
                   'ds-press flex w-full items-center gap-3 rounded-chunky border-2 border-b-[4px] p-3 text-left text-sm active:border-b-2',
-                  state === 'neutral' && 'border-macaw bg-iguana text-whale',
-                  state === 'correct' && 'border-feather-green bg-sea-sponge text-tree-frog',
-                  state === 'wrong' && 'border-cardinal bg-walking-fish text-fire-ant',
+                  state === 'neutral' && 'border-iris bg-lilac text-plum',
+                  state === 'correct' && 'border-meadow bg-dew text-fern',
+                  state === 'wrong' && 'border-poppy bg-petal text-rust',
                 )}
               >
                 <span
                   aria-hidden
-                  className="grid size-6 shrink-0 place-items-center rounded-md bg-snow/70 text-xs"
+                  className="grid size-6 shrink-0 place-items-center rounded-md bg-paper/70 text-xs"
                 >
                   {i + 1}
                 </span>
@@ -67,21 +67,21 @@ export function OrderList({
         })}
 
         {ordered.length === 0 && (
-          <li className="rounded-chunky border-2 border-dashed border-swan p-4 text-center text-sm text-hare">
+          <li className="rounded-chunky border-2 border-dashed border-linen p-4 text-center text-sm text-pebble">
             {emptyHint}
           </li>
         )}
       </ol>
 
       {pool.length > 0 && (
-        <ul className="flex flex-wrap gap-2 border-t-2 border-swan pt-4">
+        <ul className="flex flex-wrap gap-2 border-t-2 border-linen pt-4">
           {pool.map((item) => (
             <li key={item.index}>
               <button
                 type="button"
                 disabled={disabled}
                 onClick={() => onPick(item.index)}
-                className="ds-press rounded-chunky border-2 border-swan border-b-[4px] bg-snow p-3 text-left text-sm text-eel hover:bg-polar active:border-b-2"
+                className="ds-press rounded-chunky border-2 border-linen border-b-[4px] bg-paper p-3 text-left text-sm text-ink hover:bg-sand active:border-b-2"
               >
                 {item.label}
               </button>

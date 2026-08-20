@@ -32,7 +32,7 @@ export function LanguageSwitch({
       role="group"
       aria-label={label}
       className={cn(
-        'flex items-center gap-0.5 rounded-full border-2 border-swan bg-polar p-0.5',
+        'flex items-center gap-0.5 rounded-full border-2 border-linen bg-sand p-0.5',
         className,
       )}
     >
@@ -48,8 +48,8 @@ export function LanguageSwitch({
             className={cn(
               'flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs uppercase transition-colors',
               active
-                ? 'bg-snow text-eel shadow-btn-sm shadow-swan'
-                : 'text-hare hover:text-wolf',
+                ? 'bg-paper text-plum shadow-btn-sm shadow-linen'
+                : 'text-pebble hover:text-plum',
             )}
           >
             <span aria-hidden>{FLAG[code]}</span>

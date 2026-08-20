@@ -17,8 +17,8 @@ function navClasses({ isActive }: { isActive: boolean }) {
   return cn(
     'ds-press flex items-center gap-3 rounded-chunky border-2 px-4 py-3 text-eyebrow uppercase',
     isActive
-      ? 'border-macaw bg-iguana text-whale'
-      : 'border-transparent text-wolf hover:bg-polar',
+      ? 'border-iris bg-lilac text-plum'
+      : 'border-transparent text-slate hover:bg-sand',
   )
 }
 
@@ -37,9 +37,9 @@ export function AppLayout() {
   )
 
   return (
-    <div className="min-h-dvh bg-snow">
-      <header className="sticky top-0 z-20 flex items-center justify-between gap-3 border-b-2 border-swan bg-snow px-4 py-3 lg:hidden">
-        <span className="text-lg text-feather-green">Bitwise</span>
+    <div className="min-h-dvh">
+      <header className="sticky top-0 z-20 flex items-center justify-between gap-3 border-b-2 border-linen bg-cream/85 px-4 py-3 backdrop-blur-sm lg:hidden">
+        <span className="text-lg text-iris">Bitwise</span>
         <div className="flex items-center gap-3">
           <StatPill icon="🔥" value={streak} label={ui('stat.streak')} tone="fox" />
           <StatPill icon="⚡" value={xp} label={ui('stat.xp')} tone="bee" />
@@ -48,9 +48,9 @@ export function AppLayout() {
       </header>
 
       <div className="mx-auto flex w-full max-w-6xl gap-8 px-4 pb-24 lg:pb-8">
-        <aside className="sticky top-0 hidden h-dvh w-60 shrink-0 flex-col gap-2 border-r-2 border-swan py-6 pr-6 lg:flex">
+        <aside className="sticky top-0 hidden h-dvh w-60 shrink-0 flex-col gap-2 border-r-2 border-linen py-6 pr-6 lg:flex">
           <div className="mb-4 flex items-center justify-between gap-2 px-4">
-            <NavLink to="/" className="text-2xl text-feather-green">
+            <NavLink to="/" className="text-2xl text-iris">
               Bitwise
             </NavLink>
             {languageSwitch}
@@ -65,11 +65,11 @@ export function AppLayout() {
             </NavLink>
           ))}
 
-          <div className="mt-auto flex items-center gap-3 rounded-chunky bg-polar p-3">
+          <div className="mt-auto flex items-center gap-3 rounded-chunky bg-lilac p-3">
             <Avatar name={LEARNER_NAME} size="sm" />
             <div className="min-w-0">
               <p className="truncate text-sm">{LEARNER_NAME}</p>
-              <p className="truncate text-xs text-wolf">
+              <p className="truncate text-xs text-slate">
                 {xp} XP · {completed.length}/{totalUnits}
               </p>
             </div>
@@ -81,7 +81,7 @@ export function AppLayout() {
         </main>
       </div>
 
-      <nav className="fixed inset-x-0 bottom-0 z-20 flex border-t-2 border-swan bg-snow lg:hidden">
+      <nav className="fixed inset-x-0 bottom-0 z-20 flex border-t-2 border-linen bg-cream/85 backdrop-blur-sm lg:hidden">
         {NAV.map((item) => (
           <NavLink
             key={item.to}
@@ -90,7 +90,7 @@ export function AppLayout() {
             className={({ isActive }) =>
               cn(
                 'flex flex-1 flex-col items-center gap-1 py-3 text-[11px] uppercase tracking-wide',
-                isActive ? 'text-macaw' : 'text-hare',
+                isActive ? 'text-iris' : 'text-pebble',
               )
             }
           >

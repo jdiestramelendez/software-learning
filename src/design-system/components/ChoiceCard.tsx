@@ -12,17 +12,18 @@ export interface ChoiceCardProps
 }
 
 const SURFACE: Record<ChoiceState, string> = {
-  idle: 'border-swan text-eel hover:bg-polar',
-  selected: 'border-macaw bg-iguana text-whale',
-  correct: 'border-feather-green bg-sea-sponge text-tree-frog',
-  wrong: 'border-cardinal bg-walking-fish text-fire-ant',
+  idle: 'border-linen text-ink hover:bg-sand',
+  selected: 'border-iris bg-lilac text-plum',
+  correct: 'border-meadow bg-dew text-fern',
+  wrong: 'border-poppy bg-petal text-rust',
 }
 
+/** The chip sits on the wash, so it takes each state's DEEP tone, not its face. */
 const CHIP: Record<ChoiceState, string> = {
-  idle: 'border-swan text-hare',
-  selected: 'border-macaw text-macaw',
-  correct: 'border-feather-green text-feather-green',
-  wrong: 'border-cardinal text-cardinal',
+  idle: 'border-linen text-pebble',
+  selected: 'border-iris text-plum',
+  correct: 'border-meadow text-fern',
+  wrong: 'border-poppy text-rust',
 }
 
 /**
@@ -43,7 +44,7 @@ export function ChoiceCard({
       type={type}
       aria-pressed={state === 'selected'}
       className={cn(
-        'ds-press flex w-full items-center gap-4 rounded-chunky border-2 border-b-[4px] bg-snow p-4 text-left text-base',
+        'ds-press flex w-full items-center gap-4 rounded-chunky border-2 border-b-[4px] bg-paper p-4 text-left text-base',
         'active:border-b-2',
         SURFACE[state],
         className,

@@ -1,4 +1,5 @@
 @import '@fontsource-variable/nunito';
+@import '@fontsource-variable/quicksand';
 @import 'tailwindcss';
 @import './design-system/tokens.css';
 
@@ -12,13 +13,33 @@
   }
 
   body {
-    @apply bg-snow font-display text-eel antialiased;
-    font-weight: 700; /* the whole system is bold by default — that is the look */
+    @apply bg-cream font-body text-ink antialiased;
+    font-weight: 600; /* the whole system is semi-bold by default — that is the look */
+
+    /* Illustration, not decoration: two very soft geometric washes anchor the
+     * cream page so it reads as a lit surface rather than flat paper. Fixed,
+     * so they never move with content, and low enough alpha that text on top
+     * keeps its contrast. */
+    background-image:
+      radial-gradient(38rem 38rem at 12% -8%, var(--color-lilac) 0%, transparent 60%),
+      radial-gradient(30rem 30rem at 105% 8%, var(--color-blush) 0%, transparent 62%);
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+  }
+
+  /* Display voice: geometric and round. Body copy stays on Nunito, which has
+   * the taller x-height and reads better at paragraph length. */
+  h1,
+  h2,
+  h3,
+  h4,
+  button {
+    font-family: var(--font-display);
   }
 
   /* Keyboard users get the full ring; mouse users never see it. */
   :focus-visible {
-    @apply outline-2 outline-offset-2 outline-macaw;
+    @apply outline-2 outline-offset-2 outline-iris;
   }
 
   button {
@@ -32,7 +53,8 @@
 
 @layer components {
   /* The signature press. Applied by Button/IconButton/ChoiceCard so the
-   * "extruded plastic" behaviour is defined in exactly one place. */
+   * behaviour is defined in exactly one place: the surface travels down and
+   * its thickness collapses, while the soft ambient shadow goes with it. */
   .ds-press {
     @apply translate-y-0 transition-[transform,box-shadow,background-color,border-color] duration-100;
   }

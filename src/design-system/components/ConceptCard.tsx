@@ -32,25 +32,25 @@ export function ConceptCard({
           {icon}
         </span>
         <div>
-          <p className="text-eyebrow uppercase text-wolf">{title}</p>
-          <h1 className="mt-1 text-title text-feather-green">{headline}</h1>
+          <p className="text-eyebrow uppercase text-slate">{title}</p>
+          <h1 className="mt-1 text-title text-plum">{headline}</h1>
         </div>
       </header>
 
       <div className="space-y-3">
         {body.map((paragraph) => (
-          <p key={paragraph.slice(0, 24)} className="font-semibold leading-relaxed text-eel">
+          <p key={paragraph.slice(0, 24)} className="font-semibold leading-relaxed text-ink">
             {paragraph}
           </p>
         ))}
       </div>
 
-      <Card className="border-macaw bg-iguana">
-        <p className="text-eyebrow uppercase text-whale">{keyPointsLabel}</p>
+      <Card className="border-iris/30 bg-lilac">
+        <p className="text-eyebrow uppercase text-plum">{keyPointsLabel}</p>
         <ul className="mt-3 space-y-2">
           {keyPoints.map((point) => (
-            <li key={point.slice(0, 24)} className="flex gap-2.5 text-sm text-eel">
-              <span aria-hidden className="text-macaw">
+            <li key={point.slice(0, 24)} className="flex gap-2.5 text-sm text-ink">
+              <span aria-hidden className="text-plum">
                 ●
               </span>
               <span className="font-semibold">{point}</span>
@@ -61,7 +61,7 @@ export function ConceptCard({
 
       {example && (
         <div>
-          <p className="mb-2 text-eyebrow uppercase text-wolf">{example.caption}</p>
+          <p className="mb-2 text-eyebrow uppercase text-slate">{example.caption}</p>
           <CodeBlock>{example.code}</CodeBlock>
         </div>
       )}
