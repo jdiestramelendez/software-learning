@@ -17,7 +17,8 @@ const SIZE = {
  * Deep tones only: the initials sit on top in `paper`, and the error red is
  * deliberately not in the rotation.
  */
-const TONES = ['bg-iris', 'bg-plum', 'bg-tide', 'bg-clay', 'bg-fern']
+/** Deep faces only — initials are always white, so every tone must carry it. */
+const TONES = ['bg-iris', 'bg-plum', 'bg-tide', 'bg-poppy', 'bg-harbor']
 
 export function Avatar({ name, size = 'md', className }: AvatarProps) {
   const initials = name

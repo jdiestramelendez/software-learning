@@ -15,6 +15,11 @@ export interface ProgressBarProps {
  * Progress reads as the brand; `meadow` stays reserved for correctness, so the
  * two never get confused with each other.
  */
+/**
+ * The `color` values are part of the public API and predate this palette, so
+ * they stay put — only what they render as has changed. `green` is now the
+ * brand fill. Fills carry no text of their own, so they run at full brightness.
+ */
 const FILL = {
   green: 'bg-iris',
   yellow: 'bg-sunbeam',

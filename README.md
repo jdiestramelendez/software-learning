@@ -33,15 +33,15 @@ npm run dev          # http://localhost:5173
 
 ## The design system
 
-> Built from scratch, so you can read every line of it. The visual identity is
-> its own: a purple brand on a warm cream page, with coral as the energetic
-> secondary — playful and friendly without borrowing anyone else's look.
+> A purple brand on a warm cream page, with coral as the energetic secondary.
+> Playful and friendly, but its own thing — the whole identity lives in one
+> file, which is the point.
 
 Everything lives in `src/design-system/`:
 
 ```
 design-system/
-  tokens.css              every colour, radius, shadow and easing curve
+  tokens.css              every colour, radius, shadow and type token
   lib/cn.ts               class merging (later utilities win)
   components/             the component library
   index.ts                the public surface — always import from here
@@ -54,61 +54,48 @@ import { Button, Card, ProgressBar } from '@/design-system'
 Visit **`/design-system`** in the running app for the living style guide — if a
 component is not on that page, it does not exist.
 
-### The palette
-
-| | Face | Deep | Wash | Used for |
-| --- | --- | --- | --- | --- |
-| **Brand** | `iris` #7a5af8 | `plum` | `lilac` | Primary action, selection, progress |
-| **Secondary** | `coral` #ff7a5c | `clay` | `blush` | Streaks, rewards, premium |
-| Success | `meadow` | `fern` | `dew` | Correct answers only |
-| Information | `sky` / `tide` | `harbor` | `mist` | Links, the second track |
-| Danger | `poppy` | `rust` | `petal` | Errors, hearts |
-| Reward | `sunbeam` | `honey` | `butter` | XP, gold |
-
-Neutrals are warm and very slightly purple, so they sit *with* the brand rather
-than against it: `ink` → `slate` → `pebble` → `linen` → `sand` → `cream` →
-`paper`. **`cream` is the page; `paper` is what sits on top of it.**
-
-### The six rules
+### The five rules
 
 1. **Tokens, never hex.** Components read `bg-iris`, not `#7a5af8`. New colour?
-   Add it to `tokens.css` first — Tailwind v4 turns every `@theme` entry into a
-   utility automatically. This file *is* the visual identity: re-skinning the
-   product means editing it and very little else.
-2. **Every hue comes in three tones.** A FACE for surfaces, a DEEP for the
-   pressed edge and for text on the wash, and a WASH for tinted backgrounds.
-   Text on a wash always takes the deep tone, never the face.
-3. **Deep surfaces take `paper`; bright surfaces take `ink`.** That single rule
-   is what lets coral and sunbeam stay genuinely bright instead of being
-   muddied down until white text passes contrast.
-4. **Everything presses.** Interactive surfaces carry two shadow layers — a
-   short solid face for thickness and a wide, very soft ambient shadow that
-   lifts them off the cream — and travel down 3px on `:active`, collapsing
-   both. That behaviour lives in one place: `.ds-press` in `index.css`.
-5. **Two rounded voices.** Quicksand is geometric and carries headings and
-   buttons; Nunito has the taller x-height and carries body copy. Buttons are
-   uppercase with wide tracking (`text-eyebrow`), and nothing is sharper than
-   8px.
-6. **Colour is never the only signal.** A selected choice changes its border,
+   Add it to `tokens.css` first. Tailwind v4 turns every `@theme` entry into a
+   utility automatically. Re-skinning the product means editing that one file
+   and very little else.
+2. **Colours are named for what they look like, not what they are for** —
+   `iris`, `coral`, `meadow`, `poppy`, `sunbeam` for meaning; `ink`, `slate`,
+   `pebble`, `linen`, `sand`, `cream`, `paper` for neutrals. Every hue comes in
+   three tones: a FACE for surfaces, a DEEP for the pressed edge and for text on
+   the wash, and a WASH for tinted backgrounds.
+3. **Everything presses.** Interactive surfaces carry two shadow layers — a
+   short solid face that gives them thickness, and a wide soft ambient shadow
+   that lifts them off the cream — and travel down 3px on `:active`. That
+   behaviour lives in one place, the `.ds-press` class in `index.css`.
+4. **Two rounded voices.** Quicksand carries headings and buttons; Nunito has
+   the taller x-height so it keeps body copy. Base weight is 600 — the whole
+   system is semi-bold by default.
+5. **Colour is never the only signal.** A selected choice changes its border,
    its background, *and* its `aria-pressed`. Icon-only buttons take a required
-   `label`. Every piece of visible enabled text clears WCAG AA — there is a
-   script in the repo history that walks the rendered pages to prove it.
+   `label`. Bright surfaces (coral, sunbeam) carry ink text rather than white,
+   which is what lets them stay bright and still pass contrast.
 
 ### Components
 
 | Component        | Purpose                                                   |
 | ---------------- | --------------------------------------------------------- |
 | `Button`         | 6 variants × 3 sizes; the press is the whole personality   |
-| `LanguageSwitch` | Two-position toggle; state in `aria-pressed`, not colour   |
 | `IconButton`     | Square icon target; requires an accessible `label`         |
 | `Card`           | Default container — 2px linen border, soft ambient lift    |
+| `CodeBlock`      | Monospace sample that scrolls instead of breaking layout   |
+| `ConceptCard`    | The teaching screen shown before a unit's questions        |
 | `ProgressBar`    | Lesson / goal progress, with the rounded-tube highlight    |
 | `Badge`          | Small status pill in six tones                             |
 | `ChoiceCard`     | Selectable answer: `idle` / `selected` / `correct` / `wrong` |
-| `FeedbackFooter` | The green/red sheet that explains a wrong answer           |
-| `ConceptCard`    | The teaching screen shown before a unit's questions        |
+| `GapCode`        | Code sample whose blank fills in as you answer             |
+| `OrderList`      | Tap-to-place ordering, no drag-and-drop                    |
+| `FeedbackFooter` | The sheet that explains a wrong answer                     |
+| `SectionHeader`  | The banner between sections of the path                    |
 | `SkillNode`      | A path bubble with an SVG progress ring                    |
-| `StatPill`       | The streak / gems / hearts counters                        |
+| `StatPill`       | The streak / XP / hearts counters                          |
+| `LanguageSwitch` | Two-position language toggle                               |
 | `Avatar`         | Initials with a deterministic colour per name              |
 
 Variants are typed. `<Button variant="banana" />` is a compile error.
