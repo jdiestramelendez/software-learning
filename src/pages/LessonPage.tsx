@@ -14,6 +14,7 @@ import {
   type ChoiceState,
 } from '@/design-system'
 import { XP_PER_CORRECT, findUnit, type Question } from '@/content'
+import { useLanguage } from '@/features/i18n/useLanguage'
 import { orderCorrectness, shuffleFor } from '@/features/lesson/answer'
 import { useLesson } from '@/features/lesson/useLesson'
 import { useProgress } from '@/features/progress/useProgress'
@@ -36,6 +37,7 @@ export function LessonPage() {
   const navigate = useNavigate()
   const found = findUnit(trackId, unitId)
   const { completeUnit } = useProgress()
+  const { ui, text } = useLanguage()
 
   const questions = useMemo<Question[]>(() => found?.unit.questions ?? [], [found])
 
@@ -81,9 +83,9 @@ export function LessonPage() {
   if (!found) {
     return (
       <div className="mx-auto max-w-md px-4 py-16 text-center">
-        <p className="text-title">Lesson not found</p>
+        <p className="text-title">{ui('lesson.notFound')}</p>
         <Link to="/" className="mt-4 inline-block text-macaw underline">
-          Back to the tracks
+          {ui('lesson.backToTracks')}
         </Link>
       </div>
     )
@@ -95,27 +97,36 @@ export function LessonPage() {
     return (
       <div className="flex min-h-dvh flex-col">
         <div className="mx-auto flex w-full max-w-3xl items-center gap-4 px-4 py-5">
-          <IconButton label="Back to the path" onClick={() => navigate(`/track/${track.id}`)}>
+          <IconButton
+            label={ui('lesson.back')}
+            onClick={() => navigate(`/track/${track.id}`)}
+          >
             ✕
           </IconButton>
-          <p className="text-eyebrow uppercase text-wolf">{track.title}</p>
+          <p className="text-eyebrow uppercase text-wolf">{text(track.title)}</p>
         </div>
 
         <div className="mx-auto w-full max-w-2xl flex-1 px-4">
           <ConceptCard
             icon={unit.icon}
-            title={unit.title}
-            headline={unit.concept.headline}
-            body={unit.concept.body}
-            keyPoints={unit.concept.keyPoints}
-            example={unit.concept.example}
+            title={text(unit.title)}
+            headline={text(unit.concept.headline)}
+            body={unit.concept.body.map(text)}
+            keyPoints={unit.concept.keyPoints.map(text)}
+            keyPointsLabel={ui('lesson.keyPoints')}
+            example={
+              unit.concept.example && {
+                caption: text(unit.concept.example.caption),
+                code: text(unit.concept.example.code),
+              }
+            }
           />
         </div>
 
         <div className="mt-10 border-t-2 border-swan px-4 py-5">
           <div className="mx-auto flex max-w-2xl justify-end">
             <Button size="lg" onClick={begin} className="w-full sm:w-auto sm:min-w-56">
-              Start · {questions.length} questions
+              {ui('lesson.start', { n: questions.length })}
             </Button>
           </div>
         </div>
@@ -131,17 +142,17 @@ export function LessonPage() {
           {perfect ? '🏆' : '✅'}
         </span>
         <h1 className="text-hero text-feather-green">
-          {perfect ? 'Flawless!' : 'Unit complete!'}
+          {perfect ? ui('lesson.perfect') : ui('lesson.complete')}
         </h1>
-        <p className="text-wolf">{unit.title}</p>
+        <p className="text-wolf">{text(unit.title)}</p>
 
         <div className="flex w-full gap-3">
           <Card className="flex-1 border-bee bg-canary text-camel">
-            <p className="text-eyebrow uppercase">XP earned</p>
+            <p className="text-eyebrow uppercase">{ui('lesson.xpEarned')}</p>
             <p className="text-title">{lesson.correctCount * XP_PER_CORRECT}</p>
           </Card>
           <Card className="flex-1 border-macaw bg-iguana text-whale">
-            <p className="text-eyebrow uppercase">Accuracy</p>
+            <p className="text-eyebrow uppercase">{ui('lesson.accuracy')}</p>
             <p className="text-title">
               {Math.round((lesson.correctCount / lesson.total) * 100)}%
             </p>
@@ -150,10 +161,10 @@ export function LessonPage() {
 
         <div className="flex w-full flex-col gap-3">
           <Button size="lg" full onClick={() => navigate(`/track/${track.id}`)}>
-            Continue
+            {ui('lesson.continue')}
           </Button>
           <Button variant="secondary" size="lg" full onClick={lesson.restart}>
-            Practice again
+            {ui('lesson.again')}
           </Button>
         </div>
       </div>
@@ -165,27 +176,30 @@ export function LessonPage() {
   return (
     <div className="flex min-h-dvh flex-col">
       <div className="mx-auto flex w-full max-w-3xl items-center gap-4 px-4 py-5">
-        <IconButton label="Quit lesson" onClick={() => navigate(`/track/${track.id}`)}>
+        <IconButton
+          label={ui('lesson.quit')}
+          onClick={() => navigate(`/track/${track.id}`)}
+        >
           ✕
         </IconButton>
         <ProgressBar
           value={lesson.index + (checked ? 1 : 0)}
           max={lesson.total}
           color={track.accent === 'green' ? 'green' : 'blue'}
-          label="Lesson progress"
+          label={ui('lesson.progress')}
         />
         <span className="flex items-center gap-1 text-lg text-cardinal">
           <span aria-hidden>❤️</span>
           {lesson.hearts}
-          <span className="sr-only">hearts remaining</span>
+          <span className="sr-only">{ui('stat.hearts')}</span>
         </span>
       </div>
 
       <div className="mx-auto w-full max-w-2xl flex-1 px-4 pt-6">
-        <h1 className="text-title">{question.prompt}</h1>
+        <h1 className="text-title">{text(question.prompt)}</h1>
 
         {question.kind !== 'gap' && question.code && (
-          <CodeBlock className="mt-5">{question.code}</CodeBlock>
+          <CodeBlock className="mt-5">{text(question.code)}</CodeBlock>
         )}
 
         <div
@@ -195,8 +209,8 @@ export function LessonPage() {
             <>
               {question.kind === 'gap' && (
                 <GapCode
-                  code={question.code}
-                  filled={picked === null ? null : question.choices[picked]}
+                  code={text(question.code)}
+                  filled={picked === null ? null : text(question.choices[picked])}
                   state={checked ? (lesson.wasCorrect ? 'correct' : 'wrong') : 'idle'}
                 />
               )}
@@ -205,13 +219,13 @@ export function LessonPage() {
               >
                 {question.choices.map((choice, i) => (
                   <ChoiceCard
-                    key={choice}
+                    key={question.id + i}
                     shortcut={i + 1}
                     state={optionState(i, picked, question.answerIndex, checked)}
                     disabled={checked}
                     onClick={() => setAnswer({ kind: 'index', value: i })}
                   >
-                    {choice}
+                    {text(choice)}
                   </ChoiceCard>
                 ))}
               </div>
@@ -221,7 +235,7 @@ export function LessonPage() {
           {question.kind === 'boolean' && (
             <>
               <Card flat className="border-2 border-swan bg-polar text-center">
-                <p className="text-lg leading-snug">{question.statement}</p>
+                <p className="text-lg leading-snug">{text(question.statement)}</p>
               </Card>
               <div className="mt-4 grid gap-3 sm:grid-cols-2">
                 {[true, false].map((value, i) => {
@@ -243,7 +257,7 @@ export function LessonPage() {
                       disabled={checked}
                       onClick={() => setAnswer({ kind: 'boolean', value })}
                     >
-                      {value ? 'True' : 'False'}
+                      {value ? ui('lesson.true') : ui('lesson.false')}
                     </ChoiceCard>
                   )
                 })}
@@ -256,6 +270,8 @@ export function LessonPage() {
               question={question}
               answer={answer?.kind === 'order' ? answer.value : []}
               checked={checked}
+              labels={question.items.map(text)}
+              emptyHint={ui('lesson.orderHint')}
               onChange={(value) => setAnswer({ kind: 'order', value })}
             />
           )}
@@ -266,13 +282,13 @@ export function LessonPage() {
         <div className="mt-10">
           <FeedbackFooter
             status={lesson.wasCorrect ? 'correct' : 'wrong'}
-            title={lesson.wasCorrect ? 'Nice one!' : 'Not quite'}
+            title={lesson.wasCorrect ? ui('lesson.correct') : ui('lesson.wrong')}
             detail={
               lesson.wasCorrect
-                ? `+${XP_PER_CORRECT} XP · ${question.explanation}`
-                : question.explanation
+                ? `+${XP_PER_CORRECT} XP · ${text(question.explanation)}`
+                : text(question.explanation)
             }
-            actionLabel="Continue"
+            actionLabel={ui('lesson.continue')}
             onAction={next}
           />
         </div>
@@ -285,7 +301,7 @@ export function LessonPage() {
               onClick={check}
               className="w-full sm:w-48"
             >
-              Check
+              {ui('lesson.check')}
             </Button>
           </div>
         </div>
@@ -298,27 +314,35 @@ function OrderQuestionBody({
   question,
   answer,
   checked,
+  labels,
+  emptyHint,
   onChange,
 }: {
   question: Extract<Question, { kind: 'order' }>
-  answer: string[]
+  /** Indices into `question.items`, in the order the learner placed them. */
+  answer: number[]
   checked: boolean
-  onChange: (value: string[]) => void
+  labels: string[]
+  emptyHint: string
+  onChange: (value: number[]) => void
 }) {
+  // Shuffle positions, not text, so the pool order never changes with language.
   const shuffled = useMemo(
-    () => shuffleFor(question.id, question.items),
-    [question.id, question.items],
+    () => shuffleFor(question.id, question.items.length),
+    [question.id, question.items.length],
   )
-  const pool = shuffled.filter((item) => !answer.includes(item))
+  const pool = shuffled.filter((index) => !answer.includes(index))
+  const toItem = (index: number) => ({ index, label: labels[index] })
 
   return (
     <OrderList
-      ordered={answer}
-      pool={pool}
+      ordered={answer.map(toItem)}
+      pool={pool.map(toItem)}
       disabled={checked}
-      correctness={checked ? orderCorrectness(question.items, answer) : undefined}
-      onPick={(item) => onChange([...answer, item])}
-      onUnpick={(item) => onChange(answer.filter((x) => x !== item))}
+      emptyHint={emptyHint}
+      correctness={checked ? orderCorrectness(answer) : undefined}
+      onPick={(index) => onChange([...answer, index])}
+      onUnpick={(index) => onChange(answer.filter((x) => x !== index))}
     />
   )
 }

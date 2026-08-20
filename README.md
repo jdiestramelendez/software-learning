@@ -3,8 +3,9 @@
 A React app for learning software engineering in bite-sized lessons — built on a
 hand-rolled, Duolingo-flavoured design system.
 
-**Two tracks · 39 units · 212 questions.** Every unit opens with a teaching card,
-then asks four kinds of question, and explains every wrong answer.
+**Two tracks · 39 units · 212 questions · English and Spanish.** Every unit opens
+with a teaching card, then asks four kinds of question, and explains every wrong
+answer — in both languages.
 
 ```bash
 npm install
@@ -139,17 +140,59 @@ is free. Every storage access degrades gracefully if `localStorage` throws
 Locked units are unreachable from the path, but a direct URL still opens one —
 deliberate, so you can jump straight to a topic you care about.
 
+## Two languages
+
+The whole app — UI *and* all 212 questions — is available in English and
+Spanish, switchable from the top bar. The choice is stored under
+`bitwise.lang.v1`; with nothing stored, the browser's own preference decides.
+
+### One type does the work
+
+```ts
+type LocalizedText = string | { en: string; es: string }
+```
+
+A plain string is language-neutral and shown as-is — code samples, `O(n²)`,
+`git add`, `403`, `bcrypt`. An object carries one value per language. Only
+actual prose is doubled, which keeps the content files readable.
+
+Crucially, **the structure is stored once**: ids, `answerIndex`, question kinds
+and how many choices exist are shared by both languages. A translation
+physically cannot drift out of sync with the original — you cannot end up with
+four options in English and three in Spanish, or a different correct answer.
+
+Two consequences worth knowing:
+
+- **Ordering answers are indices, not text** (`{ kind: 'order', value: [0, 2, 1] }`).
+  Grading and the shuffle both work on positions, so switching language
+  mid-question keeps your answer intact and the pool in the same order.
+- **UI strings are typed against English.** `es` is `Record<StringKey, string>`,
+  so a forgotten translation is a compile error rather than a blank label. A
+  test also checks that `{placeholders}` survive translation.
+
+### Adding a language
+
+1. Add the code to `LANGUAGES` in `src/content/types.ts`.
+2. Add the dictionary in `src/features/i18n/strings.ts` — the compiler will list
+   every string you still owe.
+3. Fill in the new key on each `LocalizedText` object; `content.test.ts` fails
+   with the exact path of anything missing.
+4. Add a flag and short code to `LanguageSwitch`.
+
+## App structure
 ## App structure
 
 ```
 src/
   components/AppLayout.tsx      left rail on desktop, tab bar on mobile
-  content/                      the entire curriculum, typed
+  content/                      the entire curriculum, typed and bilingual
     types.ts                    Track / Section / Unit / Concept / Question
+                                + LocalizedText and the language list
     foundations/  aws/          one file per section
     index.ts                    track registry + lookup helpers
   design-system/                see above
   features/
+    i18n/                       language context, UI dictionary
     lesson/                     answer grading + the lesson state machine
     progress/                   localStorage, unlocking, streaks
   pages/
@@ -157,7 +200,8 @@ src/
     LearnPage.tsx               the path, grouped into sections
     LessonPage.tsx              full-screen unit: concept, then questions
     ProfilePage.tsx             stats, achievements, reset
-    DesignSystemPage.tsx        the living style guide
+    DesignSystemPage.tsx        the living style guide (English only — it is
+                                developer documentation, not course content)
 ```
 
 `useLesson` holds the quiz rules with no routing or storage attached, so they
@@ -205,4 +249,5 @@ only duplicate work Vercel already does.
 - Spaced repetition: resurface the questions you got wrong
 - Replace the emoji icons with a real icon set
 - More question types: matching pairs, free-text code entry
+- More languages — the model already supports it, see above
 - A dark theme — redefine the neutrals inside `@theme` and the rest follows

@@ -11,8 +11,11 @@ import { architecture } from './aws/04-architecture'
 
 export const foundationsTrack: Track = {
   id: 'foundations',
-  title: 'Software Foundations',
-  subtitle: 'From reading code to running it in production.',
+  title: { en: 'Software Foundations', es: 'Fundamentos del software' },
+  subtitle: {
+    en: 'From reading code to running it in production.',
+    es: 'De leer código a ponerlo en producción.',
+  },
   icon: '⚙️',
   accent: 'green',
   sections: [thinking, craft, team, systems, production],
@@ -20,8 +23,11 @@ export const foundationsTrack: Track = {
 
 export const awsTrack: Track = {
   id: 'aws',
-  title: 'AWS & the Cloud',
-  subtitle: 'How the cloud actually works, one service at a time.',
+  title: { en: 'AWS & the Cloud', es: 'AWS y la nube' },
+  subtitle: {
+    en: 'How the cloud actually works, one service at a time.',
+    es: 'Cómo funciona la nube de verdad, un servicio a la vez.',
+  },
   icon: '☁️',
   accent: 'blue',
   sections: [fundamentals, compute, data, architecture],
@@ -58,5 +64,12 @@ export const totalQuestions = tracks.reduce(
 /** XP awarded per correct answer — one place, used by the lesson and the profile. */
 export const XP_PER_CORRECT = 10
 
+export { LANGUAGES, t, tAll } from './types'
 export type { Question, Track, Unit }
-export type { Concept, Section, QuestionKind } from './types'
+export type {
+  Concept,
+  Lang,
+  LocalizedText,
+  QuestionKind,
+  Section,
+} from './types'

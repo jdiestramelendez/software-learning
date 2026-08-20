@@ -8,6 +8,8 @@ export interface SkillNodeProps {
   title: string
   /** 0–1. Drawn as a ring around the bubble while the skill is in progress. */
   progress?: number
+  /** Accessible name used when the unit is locked, e.g. "Big-O — locked". */
+  lockedLabel?: string
   onClick?: () => void
 }
 
@@ -38,6 +40,7 @@ export function SkillNode({
   icon,
   title,
   progress = 0,
+  lockedLabel,
   onClick,
 }: SkillNodeProps) {
   const locked = status === 'locked'
@@ -78,7 +81,7 @@ export function SkillNode({
           type="button"
           onClick={onClick}
           disabled={locked}
-          aria-label={locked ? `${title} — locked` : title}
+          aria-label={locked ? (lockedLabel ?? `${title} — locked`) : title}
           className={cn(
             'ds-press grid size-16 place-items-center rounded-full text-3xl',
             'disabled:cursor-not-allowed',

@@ -7,6 +7,8 @@ export interface ConceptCardProps {
   headline: string
   body: string[]
   keyPoints: string[]
+  /** Heading above the key points, e.g. "Worth remembering". */
+  keyPointsLabel: string
   example?: { caption: string; code: string }
 }
 
@@ -20,6 +22,7 @@ export function ConceptCard({
   headline,
   body,
   keyPoints,
+  keyPointsLabel,
   example,
 }: ConceptCardProps) {
   return (
@@ -43,7 +46,7 @@ export function ConceptCard({
       </div>
 
       <Card className="border-macaw bg-iguana">
-        <p className="text-eyebrow uppercase text-whale">Worth remembering</p>
+        <p className="text-eyebrow uppercase text-whale">{keyPointsLabel}</p>
         <ul className="mt-3 space-y-2">
           {keyPoints.map((point) => (
             <li key={point.slice(0, 24)} className="flex gap-2.5 text-sm text-eel">

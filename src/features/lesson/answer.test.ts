@@ -12,22 +12,23 @@ const orderQuestion: Question = {
 
 describe('shuffleFor', () => {
   it('is deterministic for a given question id', () => {
-    expect(shuffleFor('o1', orderQuestion.kind === 'order' ? orderQuestion.items : [])).toEqual(
-      shuffleFor('o1', ['one', 'two', 'three', 'four']),
-    )
+    expect(shuffleFor('o1', 4)).toEqual(shuffleFor('o1', 4))
   })
 
   it('never hands back the correct order', () => {
-    const items = ['a', 'b', 'c', 'd']
-    // Every id must produce a pool that is not already the answer.
+    const sorted = [0, 1, 2, 3]
     for (let i = 0; i < 200; i++) {
-      expect(shuffleFor(`q-${i}`, items)).not.toEqual(items)
+      expect(shuffleFor(`q-${i}`, 4)).not.toEqual(sorted)
     }
   })
 
-  it('keeps exactly the same items', () => {
-    const items = ['a', 'b', 'c', 'd']
-    expect([...shuffleFor('x', items)].sort()).toEqual([...items].sort())
+  it('returns every position exactly once', () => {
+    expect([...shuffleFor('x', 5)].sort()).toEqual([0, 1, 2, 3, 4])
+  })
+
+  it('is language-independent — it shuffles positions, not text', () => {
+    // The pool order must not change when the learner switches language.
+    expect(shuffleFor('aws-wa-5', 5)).toEqual(shuffleFor('aws-wa-5', 5))
   })
 })
 
@@ -52,19 +53,13 @@ describe('grading', () => {
   })
 
   it('requires every item before an ordering can be checked', () => {
-    expect(isComplete(orderQuestion, { kind: 'order', value: ['one', 'two'] })).toBe(false)
-    expect(
-      isComplete(orderQuestion, { kind: 'order', value: ['one', 'two', 'three', 'four'] }),
-    ).toBe(true)
+    expect(isComplete(orderQuestion, { kind: 'order', value: [0, 1] })).toBe(false)
+    expect(isComplete(orderQuestion, { kind: 'order', value: [0, 1, 2, 3] })).toBe(true)
   })
 
   it('grades an ordering only on an exact sequence match', () => {
-    expect(
-      isCorrect(orderQuestion, { kind: 'order', value: ['one', 'two', 'three', 'four'] }),
-    ).toBe(true)
-    expect(
-      isCorrect(orderQuestion, { kind: 'order', value: ['one', 'three', 'two', 'four'] }),
-    ).toBe(false)
+    expect(isCorrect(orderQuestion, { kind: 'order', value: [0, 1, 2, 3] })).toBe(true)
+    expect(isCorrect(orderQuestion, { kind: 'order', value: [0, 2, 1, 3] })).toBe(false)
   })
 
   it('rejects an answer of the wrong shape', () => {
@@ -72,6 +67,6 @@ describe('grading', () => {
   })
 
   it('reports per-position correctness for colouring', () => {
-    expect(orderCorrectness(['a', 'b', 'c'], ['a', 'c', 'b'])).toEqual([true, false, false])
+    expect(orderCorrectness([0, 2, 1])).toEqual([true, false, false])
   })
 })

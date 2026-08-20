@@ -1,14 +1,16 @@
 import { NavLink, Outlet } from 'react-router-dom'
-import { Avatar, StatPill, cn } from '@/design-system'
+import { Avatar, LanguageSwitch, StatPill, cn } from '@/design-system'
 import { totalUnits } from '@/content'
+import { useLanguage } from '@/features/i18n/useLanguage'
 import { useProgress } from '@/features/progress/useProgress'
+import type { StringKey } from '@/features/i18n/strings'
 
 const LEARNER_NAME = 'Jose Diestra'
 
-const NAV = [
-  { to: '/', label: 'Learn', icon: '🏠', end: true },
-  { to: '/profile', label: 'Profile', icon: '👤', end: false },
-  { to: '/design-system', label: 'Design', icon: '🎨', end: false },
+const NAV: Array<{ to: string; key: StringKey; icon: string; end: boolean }> = [
+  { to: '/', key: 'nav.learn', icon: '🏠', end: true },
+  { to: '/profile', key: 'nav.profile', icon: '👤', end: false },
+  { to: '/design-system', key: 'nav.design', icon: '🎨', end: false },
 ]
 
 function navClasses({ isActive }: { isActive: boolean }) {
@@ -23,34 +25,43 @@ function navClasses({ isActive }: { isActive: boolean }) {
 /** Left rail on desktop, bottom tab bar on mobile. */
 export function AppLayout() {
   const { xp, streak, completed } = useProgress()
+  const { lang, setLang, ui } = useLanguage()
+
+  const languageSwitch = (
+    <LanguageSwitch
+      value={lang}
+      onChange={setLang}
+      label={ui('lang.label')}
+      names={{ en: ui('lang.en'), es: ui('lang.es') }}
+    />
+  )
 
   return (
     <div className="min-h-dvh bg-snow">
-      <header className="sticky top-0 z-20 flex items-center justify-between border-b-2 border-swan bg-snow px-4 py-3 lg:hidden">
+      <header className="sticky top-0 z-20 flex items-center justify-between gap-3 border-b-2 border-swan bg-snow px-4 py-3 lg:hidden">
         <span className="text-lg text-feather-green">Bitwise</span>
-        <div className="flex items-center gap-4">
-          <StatPill icon="🔥" value={streak} label="Day streak" tone="fox" />
-          <StatPill icon="⚡" value={xp} label="Total XP" tone="bee" />
-          <StatPill
-            icon="📚"
-            value={`${completed.length}/${totalUnits}`}
-            label="Units complete"
-            tone="macaw"
-          />
+        <div className="flex items-center gap-3">
+          <StatPill icon="🔥" value={streak} label={ui('stat.streak')} tone="fox" />
+          <StatPill icon="⚡" value={xp} label={ui('stat.xp')} tone="bee" />
+          {languageSwitch}
         </div>
       </header>
 
       <div className="mx-auto flex w-full max-w-6xl gap-8 px-4 pb-24 lg:pb-8">
         <aside className="sticky top-0 hidden h-dvh w-60 shrink-0 flex-col gap-2 border-r-2 border-swan py-6 pr-6 lg:flex">
-          <NavLink to="/" className="mb-4 px-4 text-2xl text-feather-green">
-            Bitwise
-          </NavLink>
+          <div className="mb-4 flex items-center justify-between gap-2 px-4">
+            <NavLink to="/" className="text-2xl text-feather-green">
+              Bitwise
+            </NavLink>
+            {languageSwitch}
+          </div>
+
           {NAV.map((item) => (
             <NavLink key={item.to} to={item.to} end={item.end} className={navClasses}>
               <span aria-hidden className="text-xl">
                 {item.icon}
               </span>
-              {item.label}
+              {ui(item.key)}
             </NavLink>
           ))}
 
@@ -59,7 +70,7 @@ export function AppLayout() {
             <div className="min-w-0">
               <p className="truncate text-sm">{LEARNER_NAME}</p>
               <p className="truncate text-xs text-wolf">
-                {xp} XP · {streak} day streak
+                {xp} XP · {completed.length}/{totalUnits}
               </p>
             </div>
           </div>
@@ -86,7 +97,7 @@ export function AppLayout() {
             <span aria-hidden className="text-xl">
               {item.icon}
             </span>
-            {item.label}
+            {ui(item.key)}
           </NavLink>
         ))}
       </nav>

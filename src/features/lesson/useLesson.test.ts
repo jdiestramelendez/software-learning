@@ -37,7 +37,9 @@ function answerCorrectly(result: { current: ReturnType<typeof useLesson> }) {
   } else if (q.kind === 'boolean') {
     act(() => result.current.setAnswer({ kind: 'boolean', value: q.answer }))
   } else {
-    act(() => result.current.setAnswer({ kind: 'order', value: [...q.items] }))
+    // Ordering answers are indices into `items`, so 0..n-1 is the correct order.
+    const inOrder = q.items.map((_, i) => i)
+    act(() => result.current.setAnswer({ kind: 'order', value: inOrder }))
   }
 }
 
@@ -109,12 +111,10 @@ describe('useLesson', () => {
     const { result } = renderHook(() => useLesson([questions[2]]))
     act(() => result.current.begin())
 
-    act(() => result.current.setAnswer({ kind: 'order', value: ['first', 'third'] }))
+    act(() => result.current.setAnswer({ kind: 'order', value: [0, 2] }))
     expect(result.current.canCheck).toBe(false)
 
-    act(() =>
-      result.current.setAnswer({ kind: 'order', value: ['first', 'third', 'second'] }),
-    )
+    act(() => result.current.setAnswer({ kind: 'order', value: [0, 2, 1] }))
     expect(result.current.canCheck).toBe(true)
     act(() => result.current.check())
     expect(result.current.wasCorrect).toBe(false)

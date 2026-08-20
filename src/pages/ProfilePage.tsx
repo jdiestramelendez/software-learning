@@ -1,5 +1,6 @@
 import { Avatar, Badge, Button, Card, ProgressBar } from '@/design-system'
 import { totalQuestions, totalUnits, tracks } from '@/content'
+import { useLanguage } from '@/features/i18n/useLanguage'
 import { useProgress } from '@/features/progress/useProgress'
 import { trackCompletion } from '@/features/progress/trackProgress'
 
@@ -7,30 +8,31 @@ const LEARNER_NAME = 'Jose Diestra'
 
 export function ProfilePage() {
   const { completed, xp, streak, reset } = useProgress()
+  const { ui, text } = useLanguage()
 
   const achievements = [
     {
       icon: '🌱',
-      title: 'First steps',
-      detail: 'Complete your first unit',
+      title: ui('achievement.first'),
+      detail: ui('achievement.firstDetail'),
       progress: Math.min(1, completed.length),
     },
     {
       icon: '🔥',
-      title: 'Wildfire',
-      detail: 'Reach a 7 day streak',
+      title: ui('achievement.streak'),
+      detail: ui('achievement.streakDetail'),
       progress: Math.min(1, streak / 7),
     },
     {
       icon: '🧠',
-      title: 'Scholar',
-      detail: `Complete all ${totalUnits} units`,
+      title: ui('achievement.scholar'),
+      detail: ui('achievement.scholarDetail', { n: totalUnits }),
       progress: completed.length / totalUnits,
     },
     {
       icon: '⚡',
-      title: 'Power learner',
-      detail: 'Earn 1,000 XP',
+      title: ui('achievement.power'),
+      detail: ui('achievement.powerDetail'),
       progress: Math.min(1, xp / 1000),
     },
   ]
@@ -41,7 +43,7 @@ export function ProfilePage() {
         <Avatar name={LEARNER_NAME} size="lg" />
         <div>
           <h1 className="text-title">{LEARNER_NAME}</h1>
-          <p className="text-sm text-wolf">Learning software, one unit at a time</p>
+          <p className="text-sm text-wolf">{ui('profile.tagline')}</p>
           <div className="mt-3 flex flex-wrap justify-center gap-2 sm:justify-start">
             <Badge tone="yellow">🔥 {streak} day streak</Badge>
             <Badge tone="green">⚡ {xp} XP</Badge>
@@ -50,13 +52,17 @@ export function ProfilePage() {
       </Card>
 
       <section>
-        <h2 className="mb-3 text-eyebrow uppercase text-wolf">Statistics</h2>
+        <h2 className="mb-3 text-eyebrow uppercase text-wolf">{ui('profile.statistics')}</h2>
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
           {[
-            { icon: '🔥', value: streak, label: 'Day streak' },
-            { icon: '⚡', value: xp, label: 'Total XP' },
-            { icon: '📚', value: `${completed.length}/${totalUnits}`, label: 'Units done' },
-            { icon: '❓', value: totalQuestions, label: 'Questions available' },
+            { icon: '🔥', value: streak, label: ui('stat.streak') },
+            { icon: '⚡', value: xp, label: ui('stat.xp') },
+            {
+              icon: '📚',
+              value: `${completed.length}/${totalUnits}`,
+              label: ui('stat.unitsDone'),
+            },
+            { icon: '❓', value: totalQuestions, label: ui('stat.questions') },
           ].map((stat) => (
             <Card key={stat.label} className="flex items-center gap-3 p-4">
               <span aria-hidden className="text-2xl">
@@ -72,7 +78,7 @@ export function ProfilePage() {
       </section>
 
       <section>
-        <h2 className="mb-3 text-eyebrow uppercase text-wolf">Tracks</h2>
+        <h2 className="mb-3 text-eyebrow uppercase text-wolf">{ui('profile.tracks')}</h2>
         <div className="space-y-3">
           {tracks.map((track) => {
             const { done, total, ratio } = trackCompletion(track, completed)
@@ -83,7 +89,7 @@ export function ProfilePage() {
                 </span>
                 <div className="min-w-0 flex-1">
                   <div className="flex items-baseline justify-between gap-2">
-                    <p className="truncate">{track.title}</p>
+                    <p className="truncate">{text(track.title)}</p>
                     <span className="shrink-0 text-xs text-wolf">
                       {done} / {total}
                     </span>
@@ -92,7 +98,7 @@ export function ProfilePage() {
                     className="mt-2 h-3"
                     color={track.accent === 'green' ? 'green' : 'blue'}
                     value={ratio * 100}
-                    label={track.title}
+                    label={text(track.title)}
                   />
                 </div>
               </Card>
@@ -102,7 +108,7 @@ export function ProfilePage() {
       </section>
 
       <section>
-        <h2 className="mb-3 text-eyebrow uppercase text-wolf">Achievements</h2>
+        <h2 className="mb-3 text-eyebrow uppercase text-wolf">{ui('profile.achievements')}</h2>
         <div className="space-y-3">
           {achievements.map((a) => (
             <Card key={a.title} className="flex items-center gap-4">
@@ -133,20 +139,17 @@ export function ProfilePage() {
       </section>
 
       <Card flat className="bg-polar">
-        <h2 className="text-eyebrow uppercase text-wolf">Progress data</h2>
-        <p className="mt-2 text-sm text-wolf">
-          Your progress is stored in this browser only — no account, no server.
-          Clearing it cannot be undone.
-        </p>
+        <h2 className="text-eyebrow uppercase text-wolf">{ui('profile.dataTitle')}</h2>
+        <p className="mt-2 text-sm text-wolf">{ui('profile.dataNote')}</p>
         <Button
           variant="secondary"
           size="sm"
           className="mt-4"
           onClick={() => {
-            if (confirm('Reset all progress? This cannot be undone.')) reset()
+            if (confirm(ui('profile.resetConfirm'))) reset()
           }}
         >
-          Reset progress
+          {ui('profile.reset')}
         </Button>
       </Card>
     </div>

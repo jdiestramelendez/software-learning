@@ -1,21 +1,22 @@
 import { Link } from 'react-router-dom'
 import { Badge, Button, Card, ProgressBar, cn } from '@/design-system'
 import { totalQuestions, totalUnits, tracks, unitsOf } from '@/content'
+import { useLanguage } from '@/features/i18n/useLanguage'
 import { useProgress } from '@/features/progress/useProgress'
 import { nextUnit, trackCompletion } from '@/features/progress/trackProgress'
 
 /** The home screen: choose a track, or continue where you left off. */
 export function TracksPage() {
   const { completed, xp } = useProgress()
+  const { ui, text } = useLanguage()
 
   return (
     <div className="mx-auto max-w-3xl space-y-8">
       <header>
         <p className="text-eyebrow uppercase text-wolf">Bitwise</p>
-        <h1 className="mt-1 text-hero text-feather-green">Learn to build software</h1>
+        <h1 className="mt-1 text-hero text-feather-green">{ui('tracks.title')}</h1>
         <p className="mt-3 font-semibold text-wolf">
-          {totalUnits} units and {totalQuestions} questions across two tracks. Short
-          lessons, one idea at a time — and every wrong answer gets an explanation.
+          {ui('tracks.intro', { units: totalUnits, questions: totalQuestions })}
         </p>
       </header>
 
@@ -39,21 +40,21 @@ export function TracksPage() {
                   {track.icon}
                 </span>
                 <div className="min-w-0">
-                  <h2 className="text-xl leading-tight">{track.title}</h2>
-                  <p className="mt-1 text-sm text-wolf">{track.subtitle}</p>
+                  <h2 className="text-xl leading-tight">{text(track.title)}</h2>
+                  <p className="mt-1 text-sm text-wolf">{text(track.subtitle)}</p>
                 </div>
               </div>
 
               <div className="mt-4 flex flex-wrap gap-2">
                 <Badge tone={green ? 'green' : 'blue'}>
-                  {track.sections.length} sections
+                  {ui('tracks.sections', { n: track.sections.length })}
                 </Badge>
-                <Badge>{unitsOf(track).length} units</Badge>
+                <Badge>{ui('tracks.units', { n: unitsOf(track).length })}</Badge>
               </div>
 
               <div className="mt-4">
                 <div className="mb-2 flex items-baseline justify-between text-xs text-wolf">
-                  <span>Progress</span>
+                  <span>{ui('tracks.progress')}</span>
                   <span>
                     {done} / {total}
                   </span>
@@ -61,7 +62,7 @@ export function TracksPage() {
                 <ProgressBar
                   value={ratio * 100}
                   color={green ? 'green' : 'blue'}
-                  label={`${track.title} progress`}
+                  label={text(track.title)}
                 />
               </div>
 
@@ -71,12 +72,12 @@ export function TracksPage() {
                   full
                   className="pointer-events-none"
                 >
-                  {started ? 'Continue' : 'Start track'}
+                  {started ? ui('tracks.continue') : ui('tracks.start')}
                 </Button>
               </Link>
               {next && (
                 <p className="mt-2 truncate text-center text-xs text-wolf">
-                  Next: {next.icon} {next.title}
+                  {ui('tracks.next')}: {next.icon} {text(next.title)}
                 </p>
               )}
             </Card>
@@ -86,7 +87,7 @@ export function TracksPage() {
 
       {xp > 0 && (
         <Card flat className="bg-canary text-center">
-          <p className="text-eyebrow uppercase text-camel">Total earned</p>
+          <p className="text-eyebrow uppercase text-camel">{ui('tracks.earned')}</p>
           <p className="text-title text-camel">{xp} XP</p>
         </Card>
       )}

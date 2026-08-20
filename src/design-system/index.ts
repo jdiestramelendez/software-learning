@@ -22,6 +22,7 @@ export {
 } from './components/FeedbackFooter'
 export { GapCode, type GapCodeProps } from './components/GapCode'
 export { IconButton, type IconButtonProps } from './components/IconButton'
+export { LanguageSwitch, type LanguageSwitchProps } from './components/LanguageSwitch'
 export { OrderList, type OrderListProps } from './components/OrderList'
 export { ProgressBar, type ProgressBarProps } from './components/ProgressBar'
 export {

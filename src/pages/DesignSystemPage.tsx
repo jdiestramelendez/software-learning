@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useLanguage } from '@/features/i18n/useLanguage'
 import {
   Avatar,
   Badge,
@@ -9,6 +10,7 @@ import {
   FeedbackFooter,
   GapCode,
   IconButton,
+  LanguageSwitch,
   OrderList,
   ProgressBar,
   SectionHeader,
@@ -56,8 +58,9 @@ const STEPS = ['Reproduce the bug', 'Read the stack trace', 'Form a hypothesis']
 export function DesignSystemPage() {
   const [picked, setPicked] = useState<number | null>(1)
   const [progress, setProgress] = useState(40)
+  const { lang, setLang } = useLanguage()
   const [gap, setGap] = useState<number | null>(null)
-  const [ordered, setOrdered] = useState<string[]>([])
+  const [ordered, setOrdered] = useState<number[]>([])
 
   return (
     <div className="mx-auto max-w-3xl space-y-10 pb-10">
@@ -104,6 +107,19 @@ export function DesignSystemPage() {
           <Button size="md">Medium</Button>
           <Button size="lg">Large</Button>
           <IconButton label="Close">✕</IconButton>
+        </div>
+        <div className="flex flex-wrap items-center gap-4">
+          <LanguageSwitch
+            value={lang}
+            onChange={setLang}
+            label="Language"
+            names={{ en: 'English', es: 'Español' }}
+          />
+          <p className="text-sm text-wolf">
+            Two-position toggle. Both options stay visible, and the pressed one carries
+            <code className="mx-1 rounded bg-polar px-1 font-mono text-xs">aria-pressed</code>
+            rather than relying on colour alone.
+          </p>
         </div>
       </Section>
 
@@ -196,10 +212,13 @@ export function DesignSystemPage() {
         <div>
           <p className="mb-2 text-eyebrow uppercase text-wolf">Put in order</p>
           <OrderList
-            ordered={ordered}
-            pool={STEPS.filter((s) => !ordered.includes(s))}
-            onPick={(item) => setOrdered((o) => [...o, item])}
-            onUnpick={(item) => setOrdered((o) => o.filter((x) => x !== item))}
+            ordered={ordered.map((index) => ({ index, label: STEPS[index] }))}
+            pool={STEPS.map((label, index) => ({ index, label })).filter(
+              (item) => !ordered.includes(item.index),
+            )}
+            emptyHint="Tap the steps below in the right order"
+            onPick={(index) => setOrdered((o) => [...o, index])}
+            onUnpick={(index) => setOrdered((o) => o.filter((x) => x !== index))}
           />
         </div>
 

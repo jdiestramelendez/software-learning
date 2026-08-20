@@ -8,6 +8,7 @@ import {
   StatPill,
 } from '@/design-system'
 import { getTrack } from '@/content'
+import { useLanguage } from '@/features/i18n/useLanguage'
 import { useProgress } from '@/features/progress/useProgress'
 import { trackCompletion, unitStatuses } from '@/features/progress/trackProgress'
 
@@ -18,6 +19,7 @@ export function LearnPage() {
   const { trackId } = useParams()
   const navigate = useNavigate()
   const { completed, streak, xp } = useProgress()
+  const { ui, text } = useLanguage()
 
   const track = getTrack(trackId)
   if (!track) return <Navigate to="/" replace />
@@ -31,23 +33,23 @@ export function LearnPage() {
       <div className="min-w-0 flex-1 space-y-10">
         <div>
           <Link to="/" className="text-sm text-macaw underline">
-            ← All tracks
+            ← {ui('learn.allTracks')}
           </Link>
           <h1 className="mt-2 text-title">
             <span aria-hidden className="mr-2">
               {track.icon}
             </span>
-            {track.title}
+            {text(track.title)}
           </h1>
-          <p className="mt-1 text-sm text-wolf">{track.subtitle}</p>
+          <p className="mt-1 text-sm text-wolf">{text(track.subtitle)}</p>
         </div>
 
         {track.sections.map((section, sectionIndex) => (
           <section key={section.id} className="space-y-6">
             <SectionHeader
-              eyebrow={`Section ${sectionIndex + 1}`}
-              title={section.title}
-              subtitle={section.subtitle}
+              eyebrow={ui('learn.section', { n: sectionIndex + 1 })}
+              title={text(section.title)}
+              subtitle={text(section.subtitle)}
               accent={track.accent}
             />
 
@@ -63,7 +65,8 @@ export function LearnPage() {
                     <SkillNode
                       status={state.status}
                       icon={unit.icon}
-                      title={unit.title}
+                      title={text(unit.title)}
+                      lockedLabel={ui('learn.locked', { title: text(unit.title) })}
                       progress={state.progress}
                       onClick={() => navigate(`/track/${track.id}/unit/${unit.id}`)}
                     />
@@ -78,7 +81,7 @@ export function LearnPage() {
       <aside className="w-full shrink-0 space-y-4 lg:sticky lg:top-6 lg:w-72 lg:self-start">
         <Card>
           <div className="flex items-center justify-between">
-            <h2 className="text-eyebrow uppercase text-wolf">Track progress</h2>
+            <h2 className="text-eyebrow uppercase text-wolf">{ui('learn.trackProgress')}</h2>
             <Badge tone={track.accent === 'green' ? 'green' : 'blue'}>
               {done} / {total}
             </Badge>
@@ -87,28 +90,25 @@ export function LearnPage() {
             className="mt-3"
             color={track.accent === 'green' ? 'green' : 'blue'}
             value={ratio * 100}
-            label={`${track.title} progress`}
+            label={text(track.title)}
           />
           <p className="mt-3 text-sm text-wolf">
             {total - done === 0
-              ? 'Track complete. Nicely done.'
-              : `${total - done} units to go.`}
+              ? ui('learn.done')
+              : ui('learn.remaining', { n: total - done })}
           </p>
         </Card>
 
         <Card>
-          <h2 className="text-eyebrow uppercase text-wolf">You</h2>
+          <h2 className="text-eyebrow uppercase text-wolf">{ui('learn.you')}</h2>
           <div className="mt-3 flex items-center justify-between">
-            <StatPill icon="🔥" value={streak} label="Day streak" tone="fox" />
-            <StatPill icon="⚡" value={xp} label="Total XP" tone="bee" />
+            <StatPill icon="🔥" value={streak} label={ui('stat.streak')} tone="fox" />
+            <StatPill icon="⚡" value={xp} label={ui('stat.xp')} tone="bee" />
           </div>
         </Card>
 
         <Card flat className="bg-polar">
-          <p className="text-sm text-wolf">
-            Units unlock in order. Finish one to open the next — your progress is saved
-            in this browser.
-          </p>
+          <p className="text-sm text-wolf">{ui('learn.unlockNote')}</p>
         </Card>
       </aside>
     </div>
