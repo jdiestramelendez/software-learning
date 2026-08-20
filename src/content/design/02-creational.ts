@@ -727,11 +727,11 @@ const deep = structuredClone(template)  // de verdad independiente`,
           code: `const template = { title: 'Invoice', lines: [] as Line[] }
 const copy = ___(template)
 copy.lines.push(line)   // template.lines must stay empty`,
-          choices: ['structuredClone', '{ ...template }', 'Object.assign({}, template)', 'template'],
+          choices: ['structuredClone', 'Object.assign', 'Object.freeze', 'shallowCopy'],
           answerIndex: 0,
           explanation: {
-            en: 'Only a deep clone breaks the link to the nested array. The two spread-style options copy the reference, so both objects end up pointing at the same `lines`.',
-            es: 'Solo un clon profundo rompe el vínculo con el array anidado. Las dos opciones tipo spread copian la referencia, así que ambos objetos acaban apuntando al mismo `lines`.',
+            en: 'Only a deep clone breaks the link to the nested array. `Object.assign` and any shallow copy duplicate the reference, so both objects end up pointing at the same `lines`, and `Object.freeze` copies nothing at all.',
+            es: 'Solo un clon profundo rompe el vínculo con el array anidado. `Object.assign` y cualquier copia superficial duplican la referencia, así que ambos objetos acaban apuntando al mismo `lines`, y `Object.freeze` no copia nada.',
           },
         },
         {

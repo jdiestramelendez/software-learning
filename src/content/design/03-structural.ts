@@ -962,8 +962,8 @@ class Combined implements Discount {          // un grupo ES un descuento
           ],
           answerIndex: 1,
           explanation: {
-            en: 'The multiplication is the smell. Adding a fourth format to the combined design means three new classes; with a bridge it means one, and adding a theme costs one too.',
-            es: 'La multiplicación es el olor. Añadir un cuarto formato al diseño combinado son tres clases nuevas; con un bridge es una, y añadir un tema también cuesta una.',
+            en: 'The multiplication is the smell. Adding a fourth format to the combined design means one new class per theme — two today, more as themes grow; with a bridge it is always one, and adding a theme costs one too.',
+            es: 'La multiplicación es el olor. Añadir un cuarto formato al diseño combinado cuesta una clase nueva por tema (dos hoy, más según crezcan los temas); con un bridge siempre es una, y añadir un tema también cuesta una.',
           },
         },
         {

@@ -57,7 +57,7 @@ export function TracksPage() {
                 <Badge>{ui('tracks.units', { n: unitsOf(track).length })}</Badge>
               </div>
 
-              <div className="mt-4">
+              <div className="mt-auto pt-4">
                 <div className="mb-2 flex items-baseline justify-between text-xs text-slate">
                   <span>{ui('tracks.progress')}</span>
                   <span>
@@ -80,11 +80,13 @@ export function TracksPage() {
                   {started ? ui('tracks.continue') : ui('tracks.start')}
                 </Button>
               </Link>
-              {next && (
-                <p className="mt-2 truncate text-center text-xs text-slate">
-                  {ui('tracks.next')}: {next.icon} {text(next.title)}
-                </p>
-              )}
+              <div className="mt-2 h-4">
+                {next && (
+                  <p className="truncate text-center text-xs text-slate">
+                    {ui('tracks.next')}: {next.icon} {text(next.title)}
+                  </p>
+                )}
+              </div>
             </Card>
           )
         })}

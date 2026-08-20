@@ -654,7 +654,7 @@ await queue.push(new RefundOrder('ord_123', 4999))`,
           },
           code: {
             en: `// 16 combinations, 5 legal — every method must defend itself
-interface Order { isPaid: boolean; isShipped: boolean; isCancelled: boolean }
+interface Order { isPaid: boolean; isShipped: boolean; isCancelled: boolean; isRefunded: boolean }
 
 // One shape per state; the compiler rejects the rest
 type Order =
@@ -665,7 +665,7 @@ type Order =
 
 // A shipped order HAS a tracking id. A cancelled one has no receipt to read.`,
             es: `// 16 combinaciones, 5 legales: cada método debe defenderse
-interface Order { isPaid: boolean; isShipped: boolean; isCancelled: boolean }
+interface Order { isPaid: boolean; isShipped: boolean; isCancelled: boolean; isRefunded: boolean }
 
 // Una forma por estado; el compilador rechaza el resto
 type Order =
