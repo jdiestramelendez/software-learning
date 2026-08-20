@@ -1,0 +1,53 @@
+@import '@fontsource-variable/nunito';
+@import 'tailwindcss';
+@import './design-system/tokens.css';
+
+@layer base {
+  :root {
+    color-scheme: light;
+  }
+
+  html {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    @apply bg-snow font-display text-eel antialiased;
+    font-weight: 700; /* the whole system is bold by default — that is the look */
+  }
+
+  /* Keyboard users get the full ring; mouse users never see it. */
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-macaw;
+  }
+
+  button {
+    cursor: pointer;
+  }
+
+  button:disabled {
+    cursor: not-allowed;
+  }
+}
+
+@layer components {
+  /* The signature press. Applied by Button/IconButton/ChoiceCard so the
+   * "extruded plastic" behaviour is defined in exactly one place. */
+  .ds-press {
+    @apply translate-y-0 transition-[transform,box-shadow,background-color,border-color] duration-100;
+  }
+
+  .ds-press:not(:disabled):active {
+    @apply translate-y-[3px] shadow-none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}

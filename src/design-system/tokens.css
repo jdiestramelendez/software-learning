@@ -1,0 +1,133 @@
+/* ---------------------------------------------------------------------------
+ * Bitwise Design System — tokens
+ *
+ * A Duolingo-inspired design language. Everything below is a Tailwind v4
+ * `@theme` token, so each entry automatically becomes a utility class:
+ *   --color-feather-green  ->  bg-feather-green / text-feather-green / ...
+ *   --radius-chunky        ->  rounded-chunky
+ *   --shadow-btn           ->  shadow-btn
+ *
+ * Rule of thumb: components never hardcode a hex value. If a colour is
+ * missing here, add it here first.
+ * ------------------------------------------------------------------------- */
+
+@theme {
+  /* -- Brand palette ------------------------------------------------------
+   * Duolingo names its colours after animals. We keep the convention because
+   * "eel" is far easier to talk about in a design review than "#4b4b4b".
+   */
+  --color-feather-green: #58cc02; /* primary action, correct answers */
+  --color-mask-green: #89e219; /* the lighter top-face of a green button */
+  --color-tree-frog: #58a700; /* the pressed / bottom face of a green button */
+  --color-sea-sponge: #d7ffb8; /* correct-answer wash */
+
+  --color-macaw: #1cb0f6; /* links, info, selected state */
+  --color-whale: #1899d6; /* pressed macaw */
+  --color-iguana: #ddf4ff; /* selected-option wash */
+
+  --color-cardinal: #ff4b4b; /* errors, wrong answers, hearts */
+  --color-fire-ant: #ea2b2b; /* pressed cardinal */
+  --color-walking-fish: #ffdfe0; /* wrong-answer wash */
+
+  --color-bee: #ffc800; /* streaks, XP, legendary */
+  --color-camel: #e2a600; /* pressed bee */
+  --color-canary: #fff4d9; /* xp wash */
+
+  --color-fox: #ff9600; /* streak flame */
+  --color-beetle: #ce82ff; /* super / premium */
+  --color-humpback: #a560e8; /* pressed beetle */
+
+  /* -- Neutrals ----------------------------------------------------------- */
+  --color-eel: #4b4b4b; /* body text */
+  --color-wolf: #777777; /* secondary text */
+  --color-hare: #afafaf; /* disabled text, icons */
+  --color-swan: #e5e5e5; /* borders */
+  --color-polar: #f7f7f7; /* app background, pressed neutral */
+  --color-snow: #ffffff;
+
+  /* -- Type ---------------------------------------------------------------
+   * Duolingo ships "din-round"/"Feather". Nunito is the closest thing that is
+   * freely licensed: same generous x-height and rounded terminals.
+   */
+  --font-display:
+    'Nunito Variable', 'Nunito', ui-rounded, 'Segoe UI Rounded', system-ui,
+    sans-serif;
+  --font-mono:
+    'JetBrains Mono', ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace;
+
+  --text-hero: 2.5rem;
+  --text-hero--line-height: 1.15;
+  --text-hero--font-weight: 800;
+  --text-title: 1.75rem;
+  --text-title--line-height: 1.2;
+  --text-title--font-weight: 800;
+  --text-eyebrow: 0.8125rem;
+  --text-eyebrow--line-height: 1.2;
+  --text-eyebrow--letter-spacing: 0.08em;
+  --text-eyebrow--font-weight: 800;
+
+  /* -- Shape --------------------------------------------------------------
+   * Nothing in this system is sharper than 8px. Interactive surfaces are
+   * `chunky`; containers are `slab`; pills are fully round.
+   */
+  --radius-chunky: 1rem;
+  --radius-slab: 1.25rem;
+
+  /* -- Elevation ----------------------------------------------------------
+   * The signature move: buttons have no blur, just a hard offset that reads
+   * as an extruded 3D face. Pressing removes it (see `.ds-press`).
+   */
+  --shadow-btn: 0 4px 0 0 var(--tw-shadow-color, #00000022);
+  --shadow-btn-sm: 0 2px 0 0 var(--tw-shadow-color, #00000022);
+  --shadow-card: 0 2px 0 0 var(--color-swan);
+  --shadow-pop: 0 8px 24px -6px #4b4b4b33;
+
+  /* -- Motion -------------------------------------------------------------
+   * Fast and springy. Anything slower than 200ms feels sluggish at this size.
+   */
+  --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --animate-pop-in: pop-in 0.22s var(--ease-bounce) both;
+  --animate-shake: shake 0.4s ease-in-out;
+  --animate-rise: rise 0.22s var(--ease-bounce) both;
+}
+
+@keyframes pop-in {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  20% {
+    transform: translateX(-8px);
+  }
+  40% {
+    transform: translateX(8px);
+  }
+  60% {
+    transform: translateX(-5px);
+  }
+  80% {
+    transform: translateX(5px);
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
