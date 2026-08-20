@@ -3,6 +3,9 @@
 A React app for learning software engineering in bite-sized lessons — built on a
 hand-rolled, Duolingo-flavoured design system.
 
+**Two tracks · 39 units · 212 questions.** Every unit opens with a teaching card,
+then asks four kinds of question, and explains every wrong answer.
+
 ```bash
 npm install
 npm run dev          # http://localhost:5173
@@ -86,23 +89,80 @@ component is not on that page, it does not exist.
 
 Variants are typed. `<Button variant="banana" />` is a compile error.
 
+## The content
+
+All course material lives in `src/content/`, typed end to end:
+
+```
+Track  ->  Section  ->  Unit  ->  Concept card + Questions
+```
+
+| Track | Sections | Units | Questions |
+| --- | --- | --- | --- |
+| **Software Foundations** — from reading code to running it in production | 5 | 25 | 137 |
+| **AWS & the Cloud** — how the cloud actually works | 4 | 14 | 75 |
+
+**Software Foundations**: how a computer thinks (data structures, Big-O,
+algorithms, memory, data representation) · code that survives other humans
+(naming, abstraction, errors, testing, debugging) · working on a team (git,
+code review, CI/CD) · the web and its systems (HTTP, API design, databases,
+transactions, security, concurrency, networking, caching) · running it in
+production (Linux, containers, observability, system design).
+
+**AWS**: cloud fundamentals (regions and AZs, IAM, the cost model) · compute
+(EC2, Lambda, containers) · storage, data and networking (S3, databases, VPC,
+CloudFront) · gluing a system together (messaging, API Gateway, CloudWatch,
+Well-Architected).
+
+### Four question types
+
+| Kind | What it asks |
+| --- | --- |
+| `choice` | Pick one of several options |
+| `boolean` | Judge a claim — good for myth-busting |
+| `gap` | Fill the `___` in a code sample; the blank fills in place |
+| `order` | Put steps in sequence, by tapping rather than dragging |
+
+Adding content means adding a typed object — no component changes. The compiler
+catches most mistakes, and `content.test.ts` catches the rest: duplicate ids, an
+`answerIndex` past the end of its `choices`, a gap question with no gap, an
+explanation too short to teach anything.
+
+### Progress
+
+Progress lives in `localStorage` under `bitwise.progress.v1` — no account, no
+server. Units unlock in order: the first incomplete unit is active, everything
+after it is locked. XP and the streak count once per unit, so practising again
+is free. Every storage access degrades gracefully if `localStorage` throws
+(Safari private mode, full quota).
+
+Locked units are unreachable from the path, but a direct URL still opens one —
+deliberate, so you can jump straight to a topic you care about.
+
 ## App structure
 
 ```
 src/
-  components/AppLayout.tsx    left rail on desktop, tab bar on mobile
-  data/course.ts              the course content (typed, static for now)
-  design-system/              see above
-  features/lesson/useLesson.ts  the quiz state machine (+ its tests)
+  components/AppLayout.tsx      left rail on desktop, tab bar on mobile
+  content/                      the entire curriculum, typed
+    types.ts                    Track / Section / Unit / Concept / Question
+    foundations/  aws/          one file per section
+    index.ts                    track registry + lookup helpers
+  design-system/                see above
+  features/
+    lesson/                     answer grading + the lesson state machine
+    progress/                   localStorage, unlocking, streaks
   pages/
-    LearnPage.tsx             the winding path of skill bubbles
-    LessonPage.tsx            full-screen quiz — keys 1–9 pick, Enter checks
-    ProfilePage.tsx           stats and achievements
-    DesignSystemPage.tsx      the living style guide
+    TracksPage.tsx              choose a track
+    LearnPage.tsx               the path, grouped into sections
+    LessonPage.tsx              full-screen unit: concept, then questions
+    ProfilePage.tsx             stats, achievements, reset
+    DesignSystemPage.tsx        the living style guide
 ```
 
-`useLesson` is deliberately free of routing and data fetching, so the quiz rules
-are unit-testable on their own — see `useLesson.test.ts`.
+`useLesson` holds the quiz rules with no routing or storage attached, so they
+are unit-testable on their own. Keyboard: `1`-`9` pick an option, `Enter`
+checks and advances.
 
 ## Deploying
 
@@ -141,7 +201,8 @@ only duplicate work Vercel already does.
 
 ## Where to take it next
 
-- Persist progress (localStorage, then a real API) instead of resetting on reload
+- Sync progress to a real backend so it follows you across devices
+- Spaced repetition: resurface the questions you got wrong
 - Replace the emoji icons with a real icon set
-- Add lesson types beyond multiple choice: fill-in-the-blank, ordering, matching
+- More question types: matching pairs, free-text code entry
 - A dark theme — redefine the neutrals inside `@theme` and the rest follows

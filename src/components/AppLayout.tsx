@@ -1,6 +1,9 @@
 import { NavLink, Outlet } from 'react-router-dom'
 import { Avatar, StatPill, cn } from '@/design-system'
-import { learner } from '@/data/course'
+import { totalUnits } from '@/content'
+import { useProgress } from '@/features/progress/useProgress'
+
+const LEARNER_NAME = 'Jose Diestra'
 
 const NAV = [
   { to: '/', label: 'Learn', icon: '🏠', end: true },
@@ -17,25 +20,27 @@ function navClasses({ isActive }: { isActive: boolean }) {
   )
 }
 
-/**
- * The persistent chrome: a left rail on desktop, a bottom tab bar on mobile.
- * Duolingo does exactly this swap at the `lg` breakpoint.
- */
+/** Left rail on desktop, bottom tab bar on mobile. */
 export function AppLayout() {
+  const { xp, streak, completed } = useProgress()
+
   return (
     <div className="min-h-dvh bg-snow">
-      {/* Mobile top bar with the live counters */}
       <header className="sticky top-0 z-20 flex items-center justify-between border-b-2 border-swan bg-snow px-4 py-3 lg:hidden">
         <span className="text-lg text-feather-green">Bitwise</span>
         <div className="flex items-center gap-4">
-          <StatPill icon="🔥" value={learner.streak} label="Day streak" tone="fox" />
-          <StatPill icon="💎" value={learner.gems} label="Gems" tone="macaw" />
-          <StatPill icon="❤️" value={learner.hearts} label="Hearts" tone="cardinal" />
+          <StatPill icon="🔥" value={streak} label="Day streak" tone="fox" />
+          <StatPill icon="⚡" value={xp} label="Total XP" tone="bee" />
+          <StatPill
+            icon="📚"
+            value={`${completed.length}/${totalUnits}`}
+            label="Units complete"
+            tone="macaw"
+          />
         </div>
       </header>
 
       <div className="mx-auto flex w-full max-w-6xl gap-8 px-4 pb-24 lg:pb-8">
-        {/* Desktop left rail */}
         <aside className="sticky top-0 hidden h-dvh w-60 shrink-0 flex-col gap-2 border-r-2 border-swan py-6 pr-6 lg:flex">
           <NavLink to="/" className="mb-4 px-4 text-2xl text-feather-green">
             Bitwise
@@ -50,10 +55,12 @@ export function AppLayout() {
           ))}
 
           <div className="mt-auto flex items-center gap-3 rounded-chunky bg-polar p-3">
-            <Avatar name={learner.name} size="sm" />
+            <Avatar name={LEARNER_NAME} size="sm" />
             <div className="min-w-0">
-              <p className="truncate text-sm">{learner.name}</p>
-              <p className="truncate text-xs text-wolf">{learner.league} league</p>
+              <p className="truncate text-sm">{LEARNER_NAME}</p>
+              <p className="truncate text-xs text-wolf">
+                {xp} XP · {streak} day streak
+              </p>
             </div>
           </div>
         </aside>
@@ -63,7 +70,6 @@ export function AppLayout() {
         </main>
       </div>
 
-      {/* Mobile bottom tabs */}
       <nav className="fixed inset-x-0 bottom-0 z-20 flex border-t-2 border-swan bg-snow lg:hidden">
         {NAV.map((item) => (
           <NavLink

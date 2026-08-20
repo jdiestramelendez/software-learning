@@ -9,6 +9,8 @@ export { Badge, type BadgeProps } from './components/Badge'
 export { Button, type ButtonProps } from './components/Button'
 export { buttonVariants } from './components/button-variants'
 export { Card, type CardProps } from './components/Card'
+export { CodeBlock, type CodeBlockProps } from './components/CodeBlock'
+export { ConceptCard, type ConceptCardProps } from './components/ConceptCard'
 export {
   ChoiceCard,
   type ChoiceCardProps,
@@ -18,8 +20,14 @@ export {
   FeedbackFooter,
   type FeedbackFooterProps,
 } from './components/FeedbackFooter'
+export { GapCode, type GapCodeProps } from './components/GapCode'
 export { IconButton, type IconButtonProps } from './components/IconButton'
+export { OrderList, type OrderListProps } from './components/OrderList'
 export { ProgressBar, type ProgressBarProps } from './components/ProgressBar'
+export {
+  SectionHeader,
+  type SectionHeaderProps,
+} from './components/SectionHeader'
 export {
   SkillNode,
   type SkillNodeProps,

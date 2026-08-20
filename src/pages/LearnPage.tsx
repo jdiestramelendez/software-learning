@@ -1,76 +1,114 @@
-import { useNavigate } from 'react-router-dom'
-import { Badge, Button, Card, ProgressBar, SkillNode, StatPill } from '@/design-system'
-import { course, learner } from '@/data/course'
+import { Link, Navigate, useNavigate, useParams } from 'react-router-dom'
+import {
+  Badge,
+  Card,
+  ProgressBar,
+  SectionHeader,
+  SkillNode,
+  StatPill,
+} from '@/design-system'
+import { getTrack } from '@/content'
+import { useProgress } from '@/features/progress/useProgress'
+import { trackCompletion, unitStatuses } from '@/features/progress/trackProgress'
 
-/** The winding path of skill bubbles — the home screen of the app. */
+/** Horizontal offsets that give the path its zig-zag, cycling per section. */
+const ZIGZAG = [0, 56, 16, -48, -8]
+
 export function LearnPage() {
+  const { trackId } = useParams()
   const navigate = useNavigate()
+  const { completed, streak, xp } = useProgress()
+
+  const track = getTrack(trackId)
+  if (!track) return <Navigate to="/" replace />
+
+  const statuses = unitStatuses(track, completed)
+  const byUnitId = new Map(statuses.map((s) => [s.unit.id, s]))
+  const { done, total, ratio } = trackCompletion(track, completed)
 
   return (
     <div className="flex flex-col gap-8 lg:flex-row">
-      <div className="min-w-0 flex-1">
-        <Card className="mb-8 border-feather-green bg-feather-green text-snow shadow-[0_4px_0_0_var(--color-tree-frog)]">
-          <p className="text-eyebrow uppercase opacity-80">{course.subtitle}</p>
-          <h1 className="mt-1 text-title">{course.title}</h1>
-          <p className="mt-2 text-sm font-bold opacity-90">
-            Short lessons, one idea at a time. Miss one and we explain why.
-          </p>
-        </Card>
+      <div className="min-w-0 flex-1 space-y-10">
+        <div>
+          <Link to="/" className="text-sm text-macaw underline">
+            ← All tracks
+          </Link>
+          <h1 className="mt-2 text-title">
+            <span aria-hidden className="mr-2">
+              {track.icon}
+            </span>
+            {track.title}
+          </h1>
+          <p className="mt-1 text-sm text-wolf">{track.subtitle}</p>
+        </div>
 
-        <ol className="flex flex-col items-center gap-8">
-          {course.units.map((unit, i) => (
-            <li
-              key={unit.id}
-              // Zig-zag the path the way the real thing does.
-              style={{ transform: `translateX(${[0, 56, 16, -48, -8][i % 5]}px)` }}
-            >
-              <SkillNode
-                status={unit.status}
-                icon={unit.icon}
-                title={unit.title}
-                progress={unit.progress}
-                onClick={() => navigate(`/lesson/${unit.id}`)}
-              />
-            </li>
-          ))}
-        </ol>
+        {track.sections.map((section, sectionIndex) => (
+          <section key={section.id} className="space-y-6">
+            <SectionHeader
+              eyebrow={`Section ${sectionIndex + 1}`}
+              title={section.title}
+              subtitle={section.subtitle}
+              accent={track.accent}
+            />
+
+            <ol className="flex flex-col items-center gap-8">
+              {section.units.map((unit, i) => {
+                const state = byUnitId.get(unit.id)
+                if (!state) return null
+                return (
+                  <li
+                    key={unit.id}
+                    style={{ transform: `translateX(${ZIGZAG[i % ZIGZAG.length]}px)` }}
+                  >
+                    <SkillNode
+                      status={state.status}
+                      icon={unit.icon}
+                      title={unit.title}
+                      progress={state.progress}
+                      onClick={() => navigate(`/track/${track.id}/unit/${unit.id}`)}
+                    />
+                  </li>
+                )
+              })}
+            </ol>
+          </section>
+        ))}
       </div>
 
-      <aside className="w-full shrink-0 space-y-4 lg:w-72">
+      <aside className="w-full shrink-0 space-y-4 lg:sticky lg:top-6 lg:w-72 lg:self-start">
         <Card>
           <div className="flex items-center justify-between">
-            <h2 className="text-eyebrow uppercase text-wolf">Daily goal</h2>
-            <Badge tone="yellow">{learner.xpToday} / {learner.dailyGoal} XP</Badge>
+            <h2 className="text-eyebrow uppercase text-wolf">Track progress</h2>
+            <Badge tone={track.accent === 'green' ? 'green' : 'blue'}>
+              {done} / {total}
+            </Badge>
           </div>
           <ProgressBar
             className="mt-3"
-            color="yellow"
-            value={learner.xpToday}
-            max={learner.dailyGoal}
-            label="Daily XP goal"
+            color={track.accent === 'green' ? 'green' : 'blue'}
+            value={ratio * 100}
+            label={`${track.title} progress`}
           />
           <p className="mt-3 text-sm text-wolf">
-            {learner.dailyGoal - learner.xpToday} XP to keep your streak alive.
+            {total - done === 0
+              ? 'Track complete. Nicely done.'
+              : `${total - done} units to go.`}
           </p>
         </Card>
 
         <Card>
-          <h2 className="text-eyebrow uppercase text-wolf">Today</h2>
+          <h2 className="text-eyebrow uppercase text-wolf">You</h2>
           <div className="mt-3 flex items-center justify-between">
-            <StatPill icon="🔥" value={learner.streak} label="Day streak" tone="fox" />
-            <StatPill icon="💎" value={learner.gems} label="Gems" tone="macaw" />
-            <StatPill icon="❤️" value={learner.hearts} label="Hearts" tone="cardinal" />
+            <StatPill icon="🔥" value={streak} label="Day streak" tone="fox" />
+            <StatPill icon="⚡" value={xp} label="Total XP" tone="bee" />
           </div>
         </Card>
 
-        <Card className="border-beetle/40 bg-beetle/10">
-          <h2 className="text-eyebrow uppercase text-humpback">Try Bitwise Max</h2>
-          <p className="mt-2 text-sm text-wolf">
-            Unlimited hearts and mistake reviews on every lesson.
+        <Card flat className="bg-polar">
+          <p className="text-sm text-wolf">
+            Units unlock in order. Finish one to open the next — your progress is saved
+            in this browser.
           </p>
-          <Button variant="super" full className="mt-4">
-            Start free trial
-          </Button>
         </Card>
       </aside>
     </div>
