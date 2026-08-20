@@ -1,1 +1,0 @@
-const byColor = {}; for (const f of uniq) { (byColor[f.color] ??= []).push(f) }; for (const [c, list] of Object.entries(byColor)) console.log(c, 'x'+list.length, '
