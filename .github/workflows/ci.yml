@@ -1,0 +1,41 @@
+name: CI
+
+# Quality gate only. Vercel deploys straight from its Git integration — this
+# workflow does not (and should not) deploy anything.
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    name: Typecheck, lint, test, build
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Test
+        run: npm test
+
+      # Catches anything that only breaks in a production build — the same
+      # command Vercel runs, so a green build here means a green build there.
+      - name: Build
+        run: npm run build

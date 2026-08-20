@@ -104,6 +104,41 @@ src/
 `useLesson` is deliberately free of routing and data fetching, so the quiz rules
 are unit-testable on their own — see `useLesson.test.ts`.
 
+## Deploying
+
+The app is a **static SPA** — `npm run build` emits `dist/` and that is the whole
+artifact. No server, no database, no environment variables. Any static host will
+serve it.
+
+### Vercel
+
+`vercel.json` already holds everything Vercel needs. The two parts that matter:
+
+- **`rewrites`** — the app uses `BrowserRouter`, so `/profile` and
+  `/lesson/big-o` exist only in the browser. Without a catch-all rewrite to
+  `index.html`, reloading one of those URLs returns a 404. Static files still
+  win: rewrites only apply when nothing matches on disk.
+- **`headers`** — Vite fingerprints every asset filename, so `/assets/*` is
+  cached forever while `index.html` is never cached. Without that split, users
+  keep loading stale asset URLs after a deploy.
+
+To deploy: import the repo at [vercel.com/new](https://vercel.com/new). Vercel
+detects Vite, reads `vercel.json`, and builds. Every push to `main` ships to
+production; every pull request gets its own preview URL.
+
+**You do not need a GitHub Actions workflow to deploy.** Vercel's Git
+integration does that natively — `.github/workflows/ci.yml` is a *quality gate*
+(typecheck, lint, test, build), not a deploy pipeline. A deploy workflow would
+only duplicate work Vercel already does.
+
+### Other hosts
+
+| Host | What it needs |
+| --- | --- |
+| Cloudflare Pages / Netlify | Build `npm run build`, output `dist`, plus the same SPA fallback |
+| GitHub Pages | `base` in `vite.config.ts`, `basename` on `BrowserRouter`, and a `404.html` copy of `index.html` |
+| nginx / Docker | `try_files $uri $uri/ /index.html;` |
+
 ## Where to take it next
 
 - Persist progress (localStorage, then a real API) instead of resetting on reload
