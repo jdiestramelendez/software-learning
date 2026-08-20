@@ -112,12 +112,15 @@ export interface Section {
   units: Unit[]
 }
 
+/** The accent a track carries through its path, badges and progress. */
+export type TrackAccent = 'green' | 'blue' | 'coral'
+
 export interface Track {
   id: string
   title: LocalizedText
   subtitle: LocalizedText
   icon: string
-  /** Design-system colour token driving the track's accent. */
-  accent: 'green' | 'blue'
+  /** Design-system colour driving the track's accent. */
+  accent: TrackAccent
   sections: Section[]
 }

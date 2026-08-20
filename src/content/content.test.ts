@@ -46,14 +46,22 @@ describe('content', () => {
       }
     }
   }
-  it('has both tracks with sections and units', () => {
-    expect(tracks).toHaveLength(2)
+  it('gives every track sections, and every section units', () => {
+    expect(tracks.length).toBeGreaterThan(0)
     for (const track of tracks) {
-      expect(track.sections.length).toBeGreaterThan(0)
+      expect(track.sections.length, track.id).toBeGreaterThan(0)
       for (const section of track.sections) {
-        expect(section.units.length).toBeGreaterThan(0)
+        expect(section.units.length, section.id).toBeGreaterThan(0)
       }
     }
+  })
+
+  it('uses unique track and section ids', () => {
+    const trackIds = tracks.map((t) => t.id)
+    expect(new Set(trackIds).size).toBe(trackIds.length)
+
+    const sectionIds = tracks.flatMap((t) => t.sections.map((s) => s.id))
+    expect(new Set(sectionIds).size).toBe(sectionIds.length)
   })
 
   it('uses unique unit ids within a track', () => {

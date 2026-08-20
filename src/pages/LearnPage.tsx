@@ -10,6 +10,7 @@ import {
 import { getTrack } from '@/content'
 import { useLanguage } from '@/features/i18n/useLanguage'
 import { useProgress } from '@/features/progress/useProgress'
+import { accentStyles } from '@/features/tracks/accent'
 import { trackCompletion, unitStatuses } from '@/features/progress/trackProgress'
 
 /** Horizontal offsets that give the path its zig-zag, cycling per section. */
@@ -24,6 +25,7 @@ export function LearnPage() {
   const track = getTrack(trackId)
   if (!track) return <Navigate to="/" replace />
 
+  const accent = accentStyles(track.accent)
   const statuses = unitStatuses(track, completed)
   const byUnitId = new Map(statuses.map((s) => [s.unit.id, s]))
   const { done, total, ratio } = trackCompletion(track, completed)
@@ -82,13 +84,13 @@ export function LearnPage() {
         <Card>
           <div className="flex items-center justify-between">
             <h2 className="text-eyebrow uppercase text-slate">{ui('learn.trackProgress')}</h2>
-            <Badge tone={track.accent === 'green' ? 'purple' : 'blue'}>
+            <Badge tone={accent.badge}>
               {done} / {total}
             </Badge>
           </div>
           <ProgressBar
             className="mt-3"
-            color={track.accent === 'green' ? 'green' : 'blue'}
+            color={accent.progress}
             value={ratio * 100}
             label={text(track.title)}
           />

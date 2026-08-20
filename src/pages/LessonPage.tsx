@@ -18,6 +18,7 @@ import { useLanguage } from '@/features/i18n/useLanguage'
 import { orderCorrectness, shuffleFor } from '@/features/lesson/answer'
 import { useLesson } from '@/features/lesson/useLesson'
 import { useProgress } from '@/features/progress/useProgress'
+import { accentStyles } from '@/features/tracks/accent'
 
 /** How a single option should render, given the phase. */
 function optionState(
@@ -185,7 +186,7 @@ export function LessonPage() {
         <ProgressBar
           value={lesson.index + (checked ? 1 : 0)}
           max={lesson.total}
-          color={track.accent === 'green' ? 'green' : 'blue'}
+          color={accentStyles(track.accent).progress}
           label={ui('lesson.progress')}
         />
         <span className="flex items-center gap-1 text-lg text-poppy">

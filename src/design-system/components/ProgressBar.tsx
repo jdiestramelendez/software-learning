@@ -5,7 +5,7 @@ export interface ProgressBarProps {
   value: number
   max?: number
   className?: string
-  color?: 'green' | 'yellow' | 'blue'
+  color?: 'green' | 'yellow' | 'blue' | 'coral'
   /** Announced to screen readers, e.g. "Lesson progress". */
   label?: string
 }
@@ -20,6 +20,7 @@ const FILL = {
   green: 'bg-iris',
   yellow: 'bg-sunbeam',
   blue: 'bg-sky',
+  coral: 'bg-coral',
 } as const
 
 /**

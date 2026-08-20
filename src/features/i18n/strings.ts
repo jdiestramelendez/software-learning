@@ -24,7 +24,7 @@ const en = {
   'lang.es': 'Español',
 
   'tracks.title': 'Learn to build software',
-  'tracks.intro': '{units} units and {questions} questions across two tracks. Short lessons, one idea at a time — and every wrong answer gets an explanation.',
+  'tracks.intro': '{units} units and {questions} questions across {tracks} tracks. Short lessons, one idea at a time — and every wrong answer gets an explanation.',
   'tracks.sections': '{n} sections',
   'tracks.units': '{n} units',
   'tracks.progress': 'Progress',
@@ -100,7 +100,7 @@ const es: Record<StringKey, string> = {
   'lang.es': 'Español',
 
   'tracks.title': 'Aprende a construir software',
-  'tracks.intro': '{units} unidades y {questions} preguntas en dos rutas. Lecciones cortas, una idea a la vez — y cada respuesta incorrecta viene con su explicación.',
+  'tracks.intro': '{units} unidades y {questions} preguntas en {tracks} rutas. Lecciones cortas, una idea a la vez — y cada respuesta incorrecta viene con su explicación.',
   'tracks.sections': '{n} secciones',
   'tracks.units': '{n} unidades',
   'tracks.progress': 'Progreso',

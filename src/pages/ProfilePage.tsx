@@ -2,6 +2,7 @@ import { Avatar, Badge, Button, Card, ProgressBar } from '@/design-system'
 import { totalQuestions, totalUnits, tracks } from '@/content'
 import { useLanguage } from '@/features/i18n/useLanguage'
 import { useProgress } from '@/features/progress/useProgress'
+import { accentStyles } from '@/features/tracks/accent'
 import { trackCompletion } from '@/features/progress/trackProgress'
 
 const LEARNER_NAME = 'Jose Diestra'
@@ -96,7 +97,7 @@ export function ProfilePage() {
                   </div>
                   <ProgressBar
                     className="mt-2 h-3"
-                    color={track.accent === 'green' ? 'green' : 'blue'}
+                    color={accentStyles(track.accent).progress}
                     value={ratio * 100}
                     label={text(track.title)}
                   />

@@ -4,6 +4,11 @@ import { craft } from './foundations/02-craft'
 import { team } from './foundations/03-team'
 import { systems } from './foundations/04-systems'
 import { production } from './foundations/05-production'
+import { principles } from './design/01-principles'
+import { creational } from './design/02-creational'
+import { structural } from './design/03-structural'
+import { behavioural } from './design/04-behavioural'
+import { architecture as designArchitecture } from './design/05-architecture'
 import { fundamentals } from './aws/01-fundamentals'
 import { compute } from './aws/02-compute'
 import { data } from './aws/03-data'
@@ -21,6 +26,18 @@ export const foundationsTrack: Track = {
   sections: [thinking, craft, team, systems, production],
 }
 
+export const designTrack: Track = {
+  id: 'design',
+  title: { en: 'Design & Architecture', es: 'Diseño y Arquitectura' },
+  subtitle: {
+    en: 'From one class to a whole system, one zoom level at a time.',
+    es: 'De una clase a un sistema entero, un nivel de zoom cada vez.',
+  },
+  icon: '📐',
+  accent: 'coral',
+  sections: [principles, creational, structural, behavioural, designArchitecture],
+}
+
 export const awsTrack: Track = {
   id: 'aws',
   title: { en: 'AWS & the Cloud', es: 'AWS y la nube' },
@@ -33,7 +50,11 @@ export const awsTrack: Track = {
   sections: [fundamentals, compute, data, architecture],
 }
 
-export const tracks: Track[] = [foundationsTrack, awsTrack]
+/**
+ * Ordered by level, not by topic: start here, level up, then take it to the
+ * cloud. The picker renders them in this order.
+ */
+export const tracks: Track[] = [foundationsTrack, designTrack, awsTrack]
 
 export function getTrack(id: string | undefined): Track | undefined {
   return tracks.find((track) => track.id === id)
@@ -69,6 +90,7 @@ export type { Question, Track, Unit }
 export type {
   Concept,
   Lang,
+  TrackAccent,
   LocalizedText,
   QuestionKind,
   Section,

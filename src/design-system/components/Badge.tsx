@@ -12,6 +12,7 @@ const badge = cva(
         red: 'bg-petal text-rust',
         yellow: 'bg-butter text-honey',
         purple: 'bg-lilac text-plum',
+        coral: 'bg-blush text-clay',
         neutral: 'bg-sand text-slate',
       },
     },

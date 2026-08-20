@@ -4,9 +4,16 @@ export interface SectionHeaderProps {
   eyebrow: string
   title: string
   subtitle: string
-  accent?: 'green' | 'blue'
+  accent?: 'green' | 'blue' | 'coral'
   className?: string
 }
+
+/** Coral is bright enough to take ink rather than white — see the palette. */
+const ACCENT = {
+  green: 'bg-iris text-paper shadow-btn shadow-plum',
+  blue: 'bg-tide text-paper shadow-btn shadow-harbor',
+  coral: 'bg-coral text-ink shadow-btn shadow-clay',
+} as const
 
 /** The banner that separates one section of the learning path from the next. */
 export function SectionHeader({
@@ -19,10 +26,8 @@ export function SectionHeader({
   return (
     <div
       className={cn(
-        'rounded-slab p-5 text-paper',
-        accent === 'green'
-          ? 'bg-iris shadow-btn shadow-plum'
-          : 'bg-tide shadow-btn shadow-harbor',
+        'rounded-slab p-5',
+        ACCENT[accent],
         className,
       )}
     >

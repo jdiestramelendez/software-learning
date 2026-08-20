@@ -3,9 +3,9 @@
 A React app for learning software engineering in bite-sized lessons — built on a
 hand-rolled, Duolingo-flavoured design system.
 
-**Two tracks · 39 units · 212 questions · English and Spanish.** Every unit opens
-with a teaching card, then asks four kinds of question, and explains every wrong
-answer — in both languages.
+**Three tracks · 69 units · 392 questions · English and Spanish.** Every unit
+opens with a teaching card, then asks four kinds of question, and explains every
+wrong answer — in both languages.
 
 ```bash
 npm install
@@ -111,7 +111,11 @@ Track  ->  Section  ->  Unit  ->  Concept card + Questions
 | Track | Sections | Units | Questions |
 | --- | --- | --- | --- |
 | **Software Foundations** — from reading code to running it in production | 5 | 25 | 137 |
+| **Design & Architecture** — from one class to a whole system | 5 | 30 | 180 |
 | **AWS & the Cloud** — how the cloud actually works | 4 | 14 | 75 |
+
+The tracks are ordered by level, not by topic: start at the foundations, level
+up through design, then take it to the cloud.
 
 **Software Foundations**: how a computer thinks (data structures, Big-O,
 algorithms, memory, data representation) · code that survives other humans
@@ -119,6 +123,21 @@ algorithms, memory, data representation) · code that survives other humans
 code review, CI/CD) · the web and its systems (HTTP, API design, databases,
 transactions, security, concurrency, networking, caching) · running it in
 production (Linux, containers, observability, system design).
+
+**Design & Architecture** follows one idea at three zoom levels — principles
+shape a class, patterns shape a component, architecture shapes a system:
+design principles (SOLID one letter at a time, then DRY/KISS/YAGNI, coupling
+and cohesion) · creational patterns (factory, builder, singleton, prototype) ·
+structural patterns (adapter, decorator, facade, proxy, composite/bridge/
+flyweight) · behavioural patterns (strategy, observer, command, state,
+template method/chain of responsibility, iterator/mediator/visitor/memento) ·
+system architecture (monolith, layered, hexagonal, microservices, service
+communication, event-driven, CQRS and event sourcing, resilience, how to
+choose). Code examples are TypeScript throughout.
+
+It deliberately picks up where Foundations leaves off: the `system-design` unit
+there introduces scaling, CAP and queues, and this track goes deeper rather
+than repeating it.
 
 **AWS**: cloud fundamentals (regions and AZs, IAM, the cost model) · compute
 (EC2, Lambda, containers) · storage, data and networking (S3, databases, VPC,
@@ -198,11 +217,12 @@ src/
   content/                      the entire curriculum, typed and bilingual
     types.ts                    Track / Section / Unit / Concept / Question
                                 + LocalizedText and the language list
-    foundations/  aws/          one file per section
+    foundations/ design/ aws/  one file per section
     index.ts                    track registry + lookup helpers
   design-system/                see above
   features/
     i18n/                       language context, UI dictionary
+    tracks/accent.ts            maps a track accent to design-system props
     lesson/                     answer grading + the lesson state machine
     progress/                   localStorage, unlocking, streaks
   pages/
